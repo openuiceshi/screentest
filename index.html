@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Dead Pixel Test - Check Your Screen Instantly (100% Free) | ScreenTest.run</title>
+    <meta name="description" content="Is your screen healthy? Run our free Dead Pixel Test to find stuck pixels and backlight bleeding. Fullscreen support for PC, Mac, iPhone & Android. No ads, no download.">
+    <link rel="canonical" href="https://screentest.run/" />
+
+    
+    <!-- 预加载 DNS -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+
+    
+    <!-- Favicon (这里暂时用emoji代替，建议换成您的SVG) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Dead Pixel Test - Check Monitor Defects | ScreenTest.run">
+    <meta property="og:description" content="The easiest way to check your monitor for dead pixels. Fullscreen, dark mode, no ads. Works on PC, Mac, and Mobile.">
+    <meta property="og:image" content="https://screentest.run/img/share.jpg"> <!-- 替换为您实际图片的URL -->
+    <meta property="og:url" content="https://screentest.run/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        /* === 核心变量：暗黑极客风 === */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --accent-color: #00ff9d; /* 霓虹绿，代表通过/测试 */
+            --hover-color: #00cc7d;
+            --font-stack: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace; /* 等宽字体更有极客感 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        /* === 布局 === */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === 头部 === */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent-color); }
+
+        /* === Hero 区域 (核心功能) === */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        
+        h1 .highlight {
+            background: linear-gradient(120deg, var(--accent-color), #00bcff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* === 启动按钮 === */
+        .start-btn {
+            display: inline-block;
+            background: var(--text-main);
+            color: var(--bg-color);
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* === 赚钱钩子 (Hook Section) === */
+        .hz-detector {
+            margin-top: 60px;
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            max-width: 100%; 
+
+        }
+        
+        .hz-value {
+            font-family: var(--font-stack);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        
+        .hz-label {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hz-cta {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 2px;
+            cursor: pointer;
+        }
+        .hz-cta:hover { color: var(--accent-color); }
+
+        /* === SEO 内容区 (放在下面) === */
+        .content-section {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #222;
+            color: #ccc;
+            text-align: left;
+        }
+        .content-section h2 { margin-bottom: 15px; font-size: 1.5rem; color: #fff; }
+        .content-section p { margin-bottom: 20px; line-height: 1.7; }
+        .tips-list { margin-left: 20px; margin-bottom: 20px; }
+        .tips-list li { margin-bottom: 10px; }
+
+        /* === 全屏测试层 (默认隐藏) === */
+        #test-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: black;
+            z-index: 9999;
+            display: none;
+            cursor: none; /* 隐藏鼠标 */
+        }
+        
+        /* 提示文字，几秒后消失 */
+        #test-hint {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.5);
+            font-family: var(--font-stack);
+            pointer-events: none;
+            transition: opacity 1s;
+            text-align: center;
+        }
+
+        /* === Footer === */
+        footer {
+            margin-top: auto;
+            padding: 40px 0;
+            border-top: 1px solid #222;
+            text-align: center;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .hz-detector { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航 -->
+    <div class="container">
+        <header>
+            <div class="logo">ScreenTest<span>.run</span></div>
+            <!-- 以后这里放 Hz Test 链接 -->
+        </header>
+
+        <main>
+            <!-- Hero -->
+            <section class="hero">
+                <h1>Dead Pixel <span class="highlight">Test</span></h1>
+                <p class="subtitle">The easiest way to check your monitor for dead pixels, stuck pixels, and screen defects. Fullscreen. No ads.</p>
+                <button class="start-btn" id="start-btn">Start Test</button>
+
+                <!-- 赚钱的钩子：自动检测 Hz -->
+                <div class="hz-detector">
+                    <div class="hz-label">Detected Refresh Rate</div>
+                    <div class="hz-value" id="hz-display">-- Hz</div>
+                    <a href="/hz-test.html"  class="hz-cta" id="hz-link">Is this accurate? Test Motion Blur →</a>
+                </div>
+            </section>
+
+            <!-- SEO Content (为了让 Google 读懂) -->
+            <section class="content-section">
+                <h2>How to check for dead pixels?</h2>
+                <ol class="tips-list">
+                    <li>Clean your screen with a soft cloth to ensure you aren't seeing dust.</li>
+                    <li>Click the <strong>"Start Test"</strong> button above.</li>
+                    <li>The tool will enter full-screen mode.</li>
+                    <li>Click anywhere or press <strong>Space</strong> to cycle through colors (Red, Green, Blue, White, Black).</li>
+                    <li>Look carefully for any tiny dots that don't change color.</li>
+                    <li>Press <strong>ESC</strong> to exit the test.</li>
+                </ol>
+
+                <h2>What are Dead vs. Stuck Pixels?</h2>
+                <p><strong>Dead Pixels</strong> are black dots that fail to turn on. They are usually permanent.</p>
+                <p><strong>Stuck Pixels</strong> are stuck on a specific color (Red, Green, or Blue). These can sometimes be fixed by flashing colors rapidly (feature coming soon).</p>
+
+                <h2>Common Screen Defects</h2>
+            <p>Use this tool to detect various display issues on <strong>LCD, LED, and OLED panels</strong>. Check for <strong>backlight bleeding</strong> in dark rooms, verify color accuracy, and spot <strong>stuck pixels</strong> (usually Red, Green, or Blue dots) versus dead pixels (Black dots).</p>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2025 ScreenTest.run. Simple tools for display perfection.
+        </footer>
+    </div>
+
+    <!-- 全屏测试层 -->
+    <div id="test-layer">
+        <div id="test-hint">
+            Click to change color<br>
+            Press ESC to exit
+        </div>
+    </div>
+
+    <script>
+        // --- 逻辑 1: 坏点测试 ---
+        const startBtn = document.getElementById('start-btn');
+        const testLayer = document.getElementById('test-layer');
+        const hint = document.getElementById('test-hint');
+        
+        // 测试用颜色序列
+        const colors = ['#000000', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF'];
+        let colorIndex = 0;
+
+        startBtn.addEventListener('click', () => {
+            enterFullscreen();
+
+             // 👇 新增这一行：锁住滚动条
+            document.body.style.overflow = 'hidden';
+
+            testLayer.style.display = 'block';
+            testLayer.style.backgroundColor = colors[0];
+            colorIndex = 0;
+            
+            // 3秒后隐藏提示
+            setTimeout(() => {
+                hint.style.opacity = '0';
+            }, 3000);
+        });
+
+        // 点击切换颜色
+        testLayer.addEventListener('click', () => {
+            colorIndex = (colorIndex + 1) % colors.length;
+            testLayer.style.backgroundColor = colors[colorIndex];
+        });
+
+        // 键盘支持 (空格/回车切换，ESC退出)
+        document.addEventListener('keydown', (e) => {
+            if (testLayer.style.display === 'block') {
+                if (e.code === 'Space' || e.code === 'ArrowRight') {
+                    colorIndex = (colorIndex + 1) % colors.length;
+                    testLayer.style.backgroundColor = colors[colorIndex];
+                }
+                if (e.code === 'Escape') {
+                    exitTest();
+                }
+            }
+        });
+
+        // 监听全屏退出事件（防止用户按F11退出但遮罩层还在）
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                exitTest();
+            }
+        });
+
+        function exitTest() {
+            testLayer.style.display = 'none';
+            hint.style.opacity = '1';
+
+            // 👇 新增这一行：恢复滚动条
+            document.body.style.overflow = ''; 
+            
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
+            }
+        }
+
+
+        // --- 逻辑 2: 赚钱的钩子 (Hz 检测) ---
+        // 这是一个简单的 requestAnimationFrame 计数器，用来估算屏幕刷新率
+        const hzDisplay = document.getElementById('hz-display');
+        let frames = 0;
+        let prevTime = performance.now();
+        let isCalculating = true;
+
+        function countFps() {
+            if (!isCalculating) return;
+            
+            frames++;
+            const time = performance.now();
+            
+            if (time >= prevTime + 1000) {
+                // 这是一个粗略估算，通常足够用来作为"钩子"
+                // 真正的测试需要更复杂的逻辑，但作为首页展示够用了
+                const fps = Math.round((frames * 1000) / (time - prevTime));
+                
+                // 为了视觉稳定，只在变化较大时更新，或者是第一次更新
+                if (hzDisplay.innerText === '-- Hz' || Math.abs(parseInt(hzDisplay.innerText) - fps) > 1) {
+                     hzDisplay.innerText = fps + " Hz";
+                }
+               
+                frames = 0;
+                prevTime = time;
+            }
+            
+            requestAnimationFrame(countFps);
+        }
+
+        // 页面加载后开始计算
+        requestAnimationFrame(countFps);
+
+    </script>
+</body>
+</html>
