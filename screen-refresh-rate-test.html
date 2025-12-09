@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Title -->
+    <title>Screen Refresh Rate Test (Hz) | Check 60Hz, 120Hz, 144Hz, 240Hz Online</title>
+    <meta name="description" content="Free online Screen Refresh Rate Test (Hz). Instantly measure your monitor’s refresh rate and browser FPS, fix 60Hz cap issues, and verify 120Hz, 144Hz, 240Hz on desktop and mobile.">
+    
+    <link rel="canonical" href="https://screentest.run/screen-refresh-rate-test" />
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Screen Refresh Rate Test (Hz) | Online Hz & FPS Checker">
+    <meta property="og:description" content="Is your monitor really running at 144Hz? Test your screen refresh rate and FPS instantly.">
+    <meta property="og:url" content="https://screentest.run/screen-refresh-rate-test">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does Hz mean for a monitor?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hz (Hertz) is the unit of frequency. For a monitor or any display, it indicates the refresh rate – the number of times the screen updates its image every second. A 60Hz monitor refreshes 60 times per second, while a 144Hz monitor refreshes 144 times per second."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does HDMI support 144Hz?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "HDMI 2.0 can deliver 144Hz at 1080p, while HDMI 2.1 extends support to 144Hz at 4K. In contrast, HDMI 1.4 is restricted to 60Hz at 1080p. For consistent 144Hz performance, a DisplayPort 1.2 connection or newer is recommended."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How to enable 120Hz on iPhone or Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iPhone: Open Settings → Accessibility → Motion, then turn Limit Frame Rate off to allow 120Hz. Android: Open Settings → Display → Screen refresh rate, and choose 120Hz if your device supports it. Keep in mind that not all smartphones offer high-refresh-rate displays — 120Hz is available on iPhone 13 Pro and newer models, as well as on many flagship Android devices released from 2020 onward."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do G-Sync or FreeSync change the refresh rate that gets measured?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "G-Sync and FreeSync adjust the display’s refresh rate in real time to follow the GPU’s frame output. However, during this type of browser-based test, the refresh rate is normally measured at the monitor’s maximum capability, so you will generally see the peak Hz value even when adaptive sync is enabled."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this an FPS Test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, this tool can operate as an FPS test. It reports the number of frames your browser renders each second. On most setups, the browser’s frame rate is capped by the display’s refresh rate, which means the measured FPS closely reflects the monitor’s actual Hz."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My result is lower than expected. What can I do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First, confirm that your monitor is set to its highest available refresh rate in your system’s display settings. Make sure your cable is appropriate for high-refresh-rate output — DisplayPort is recommended when supported. Update your graphics drivers, and close any resource-heavy applications while running the test. If your readings are still lower than expected, the limitation may come from your hardware or overall setup."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this test work on mobile phones?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, this refresh rate test works on both smartphones and tablets through any modern mobile browser. It provides a straightforward way to check whether your device is actually operating at its intended 90Hz or 120Hz refresh rate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is 60Hz good enough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For office work and movies, 60Hz is standard. For competitive gaming (CS:GO, Valorant), 144Hz or higher is recommended for lower input lag."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is V-Sync?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "V-Sync locks your game's FPS to your monitor's Hz to prevent \"screen tearing\". This test relies on V-Sync logic to measure your refresh rate."
+      }
+    }
+  ]
+}
+</script>
+
+
+    <style>
+        /* === 核心变量 === */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --accent-color: #00ff9d; /* 核心霓虹绿 */
+            --font-stack: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === Header === */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo a { text-decoration: none; color: #fff; transition: opacity 0.2s; }
+        .logo a:hover { opacity: 0.8; }
+        .logo span { color: var(--accent-color); }
+
+        .top-nav { display: flex; gap: 15px; align-items: center; }
+        .nav-link { 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+            /*font-family: var(--font-stack); */
+        }
+
+        .nav-link.home { color: #fff; border: 1px solid #333; }
+        .nav-link.home:hover { border-color: #666; background: #222; }
+        .nav-link.hz { color: var(--accent-color); border: 1px solid var(--accent-color); }
+        .nav-link.hz:hover { background: var(--accent-color); color: var(--bg-color); }
+        
+        /* === Hero / Tool Section === */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        h1 {
+            font-size: clamp(2rem, 3vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+            /*font-family: var(--font-stack); */
+
+        }
+        
+        h1 .hz-highlight {
+            color: var(--accent-color);
+            text-shadow: 0 0 25px rgba(0, 255, 157, 0.2);
+        }
+
+        /* === 顶部简介 (SEO 知识点) === */
+        .intro-bullets {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px 25px;
+            border-radius: 12px;
+            /*border-left: 3px solid var(--accent-color);*/
+            max-width: 700px;
+            margin-bottom: 40px;
+            margin-top: 15px;
+        }
+        .intro-bullets ul { list-style: none; padding: 0; }
+        .intro-bullets li { margin-bottom: 10px; color: #ccc; font-size: 0.95rem; }
+        .intro-bullets strong { color: #fff; font-weight: 600; margin-right: 5px; }
+
+        /* === Hz Meter Card (核心工具卡片) === */
+        .hz-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            overflow: hidden;
+        }
+        /* 顶部发光条 */
+        .hz-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+
+        .hz-value-container {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .hz-number {
+            font-family: var(--font-stack);
+            font-size: 4rem; /* 超大字体 */
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .hz-unit {
+            font-size: 2rem;
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .hz-status {
+            color: var(--text-dim);
+            margin-bottom: 25px;
+            min-height: 1.5em;
+            font-family: var(--font-stack);
+            font-size: 0.9rem;
+        }
+
+        /* Test Again 按钮 (改为绿色风格) */
+        .btn-test-again {
+            background-color: var(--accent-color);
+            color: #000; /* 绿底黑字，对比度高 */
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            display: none;
+            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+        }
+        .btn-test-again:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 255, 157, 0.5); }
+        .btn-test-again:active { transform: scale(0.98); }
+        
+        /* 轨道 */
+        .motion-track {
+            width: 100%;
+            height: 60px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+        }
+
+        /* 移动的竖条 (改为绿色) */
+        .motion-bar {
+            position: absolute;
+            top: 0; bottom: 0; width: 4px;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
+            animation: moveLeftRight 2s linear infinite alternate;
+        }
+
+        @keyframes moveLeftRight {
+            0% { left: 0; }
+            100% { left: calc(100% - 4px); }
+        }
+
+        .indicator-label { 
+            color: var(--text-dim); 
+            font-size: 0.85rem; 
+            margin-bottom: 10px;
+        }
+
+        /* === Content Section General === */
+        .content-section {
+            /*margin-bottom: 60px;*/
+            padding-top: 20px;
+            /*border-top: 1px solid #222;*/
+            color: #ccc;
+            text-align: left;
+        }
+        .content-section h2 { margin-bottom: 20px; font-size: 1.5rem; color: #fff; margin-top: 40px; }
+        .content-section h3 { font-size: 1.1rem; color: #fff; margin-bottom: 10px; 
+            /*font-family: var(--font-stack); */
+        }
+        .content-section p { margin-bottom: 15px; line-height: 1.8; color: #b0b0b0; }
+        .content-section ul { margin-bottom: 20px; padding-left: 20px; }
+        .content-section li { margin-bottom: 10px; color: #b0b0b0; }
+        .content-section strong { color: #fff; }
+
+        /* === Steps List (操作步骤 - 您要求加入的部分) === */
+        .steps-container {
+            background: #111;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            /*border-left: 3px solid var(--accent-color); */
+        }
+        .steps-list { margin-left: 20px; }
+        .steps-list li { margin-bottom: 10px; }
+
+        /* === Troubleshooting Box (故障排查) === */
+        .troubleshoot-box {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .troubleshoot-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .troubleshoot-card h3 { 
+            color: var(--accent-color); 
+            font-size: 1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-family: var(--font-stack); 
+        }
+
+        /* === FAQ === */
+        .faq-item { margin-bottom: 15px; 
+            /*border-bottom: 1px solid #222; */
+            padding-bottom: 15px; }
+        .faq-item h3 { color: #eee; font-size: 1.1rem; margin-bottom: 8px; }
+        
+        /* === Bottom Nav === */
+        .color-grid-section { text-align: center; padding: 60px 0; margin-top: 40px; }
+        .color-grid-section { text-align: center; padding: 60px 0; border-top: 1px solid #222; margin-top: 60px; }
+        .color-grid-section h2 { font-size: 1.6rem; margin-bottom: 40px; color: #fff; }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .color-card {
+            display: flex; flex-direction: column; align-items: center; text-decoration: none;
+            background: var(--card-bg); border: 1px solid #333; border-radius: 6px; padding: 10px;
+            transition: transform 0.2s;
+        }
+        .color-card:hover { transform: translateY(-3px); 
+            border-color: var(--accent-color); }
+
+        .color-preview { width: 100%; height: 30px; border-radius: 4px; margin-bottom: 8px; }
+        .color-card span { font-size: 0.8rem; color: #888; font-family: var(--font-stack); }
+        .color-card.white .color-preview { background: #fff; }
+        .color-card.black .color-preview { background: #000; border: 1px solid #333; }
+        .color-card.red .color-preview { background: #f00; }
+        .color-card.green .color-preview { background: #0f0; }
+        .color-card.blue .color-preview { background: #00f; }
+
+        footer { margin-top: auto; padding: 40px 0; border-top: 1px solid #222; text-align: center; color: #555; font-size: 0.9rem; }
+
+        /* === seo-summary === */
+        .seo-summary {
+        max-width: 600px;
+        margin: 0 auto 20px;
+        text-align: center;
+        color: var(--text-dim);
+        font-size: 1.1rem;
+        line-height: 1.5;
+        }
+        .seo-summary strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .last-updated {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* === 优化后的提示语 (放在 Hz 卡片内) === */
+        .accuracy-tip {
+            margin-top: 20px;
+            /*padding: 8px 12px;*/
+            /*background: rgba(255, 255, 255, 0.05);*/
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .accuracy-tip .icon {
+            font-style: normal;
+            opacity: 0.7;
+        }
+
+        /* === 优化后的视觉条区域 === */
+        .visual-indicator-section {
+            width: 100%;
+            max-width: 800px; /* 和上面卡片等宽，视觉对齐 */
+            margin-top: 30px;
+            text-align: center; /* 左对齐更像仪表盘 */
+            margin-bottom: 40px;
+        }
+
+        .indicator-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline; /* 文字底部对齐 */
+            margin-bottom: 8px;
+            padding: 0 4px;
+        }
+
+        .indicator-title {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .indicator-desc {
+            color: #444;
+            font-size: 0.75rem;
+        }
+
+        /* 轨道样式微调（更精致） */
+        .motion-track {
+            height: 40px; /* 稍微变细一点，不要那么笨重 */
+            background: #111;
+            border: 1px solid #222;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .motion-bar {
+            width: 3px; /* 线条细一点，显得更精准 */
+            box-shadow: 0 0 10px var(--accent-color); /* 加强发光 */
+        }
+
+
+        /* 汉堡按钮基础样式：桌面端隐藏 */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            /*padding: 6px;*/
+            margin-left: auto;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 999px;
+            margin: 3px 0;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        /* ====== 移动端适配：<= 720px ====== */
+        @media (max-width: 720px) {
+            /* 顶部：汉堡菜单 + 折叠菜单 */
+            header {
+                position: relative;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 20;
+            }
+
+            /* 折叠菜单：默认隐藏，下拉面板 */
+            .top-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                background: var(--card-bg);
+                border: 1px solid #333;
+                border-radius: 12px;
+                padding: 10px 12px;
+                display: none;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 180px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            }
+
+            /* header 上加 nav-open 时才展开菜单（JS 控制这个 class） */
+            header.nav-open .top-nav {
+                display: flex;
+            }
+
+            .nav-link {
+                display: block;
+                width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            /* 汉堡三条线的开合动画（可选） */
+            header.nav-open .nav-toggle span:nth-child(1) {
+                transform: translateY(10px) rotate(45deg);
+            }
+            header.nav-open .nav-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+            header.nav-open .nav-toggle span:nth-child(3) {
+                transform: translateX(0px) translateY(-6px) rotate(-45deg);
+            }
+
+            /* === 正文部分的移动端优化 === */
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 40px 0 32px;
+            }
+
+            h1 {
+                font-size: 2rem; /* 覆盖 clamp 上限，让手机上稍微小一点 */
+                margin-bottom: 20px;
+            }
+
+            .seo-summary {
+                font-size: 0.98rem;
+                margin-bottom: 20px;
+                padding: 0 4px;
+            }
+
+            .intro-bullets {
+                padding: 16px 18px;
+                margin-bottom: 30px;
+                max-width: 100%;
+            }
+
+            /* Hz 卡片在手机上稍微瘦一点、拉满宽度 */
+            .hz-card {
+                padding: 24px 20px;
+                max-width: 100%;
+                margin: 0 auto 24px;
+            }
+
+            .hz-number {
+                font-size: 3rem;
+            }
+
+            .hz-unit {
+                font-size: 1.4rem;
+            }
+
+            .hz-status {
+                font-size: 0.9rem;
+            }
+
+            .accuracy-tip {
+                margin-top: 14px;
+                font-size: 0.8rem;
+            }
+
+            /* 视觉条：占满宽度，和卡片对齐 */
+            .visual-indicator-section {
+                max-width: 100%;
+                margin-top: 20px;
+                margin-bottom: 30px;
+            }
+
+            .motion-track {
+                height: 32px;
+            }
+
+            /* 内容区：整体往上收一点间距 */
+            .content-section {
+                margin-top: 28px;
+                padding-top: 20px;
+            }
+
+            /* 步骤容器 */
+            .steps-container {
+                padding: 18px 16px;
+                margin-bottom: 30px;
+            }
+
+            /* Troubleshoot 卡片：一列展示 */
+            .troubleshoot-box {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-bottom: 30px;
+            }
+
+            .troubleshoot-card {
+                padding: 18px 16px;
+            }
+
+            /* FAQ 字号略微缩小一点 */
+            .faq-item h3 {
+                font-size: 1.05rem;
+            }
+            .faq-item p {
+                font-size: 0.95rem;
+            }
+
+            /* 底部颜色网格：放宽间距，拉满宽度 */
+            .color-grid-section {
+                padding: 40px 0;
+                margin-top: 40px;
+            }
+
+            .color-grid {
+                max-width: 100%;
+                gap: 12px;
+            }
+
+            footer {
+                padding: 30px 0;
+                font-size: 0.85rem;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo"><a href="/">ScreenTest<span>.run</span></a></div>
+
+              <!-- 汉堡按钮：桌面隐藏，移动显示 -->
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="top-nav">
+                <a href="/" class="nav-link home">Dead Pixel Test</a>
+                <a href="/white-screen" class="nav-link home">White Screen</a>
+               <a href="/black-screen" class="nav-link home">Black Screen</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Tool -->
+            <section class="hero">
+                <h1>Screen <span class="hz-highlight">Refresh Rate</span> & Hz Test</h1>
+                
+
+                <div class="seo-summary">
+                    <p><strong>Curious about your refresh rate</strong>? This free online <strong>Hz test</strong> quickly reads the frames per second (FPS) of your <strong>monitor</strong>, <strong>display</strong>, or <strong>mobile screen</strong>.
+                    </p>
+                    <p class="last-updated" id="update-date"></p>
+                </div>
+
+                <!-- 2. 核心工具卡片 -->
+                <div class="hz-card">
+                    <div class="hz-value-container">
+                        <div class="hz-number" id="hz-val">--</div>
+                        <div class="hz-unit">Hz</div>
+                    </div>
+                    <div class="hz-status" id="hz-status">Calculating...</div>
+                    
+                    <!-- Test Again 按钮 -->
+                    <button class="btn-test-again" id="btn-restart">Test Again</button>
+
+                    <!-- 【修改点 1】把提示语放进卡片里，作为次要信息 -->
+                    <div class="accuracy-tip">
+                        <span class="icon"></span>For best accuracy, close heavy apps.
+                    </div>
+                </div>
+
+                <!-- 3. 视觉验证条 (Motion Bar) -->
+                <!-- <div class="visual-indicator-section">
+                    <div class="indicator-label">Visual Refresh Rate Indicator (Smoother = Higher Hz)</div>
+                    <div class="indicator-label">For more reliable results, make sure no other resource-heavy applications are running in the background.</div>
+                    <div class="motion-track">
+                        <div class="motion-bar"></div>
+                    </div>
+                    
+                </div> -->
+
+                <!-- 【修改点 2】视觉验证条区域，重新排版 -->
+                <div class="visual-indicator-section">
+                 <div class="indicator-label">Visual Refresh Rate Indicator (Smoother = Higher Hz)</div>
+                    <div class="motion-track">
+                        <div class="motion-bar"></div>
+                    </div>
+                </div>
+                
+                <!-- 1. 顶部知识点列表 (SEO & Intro) -->
+                <!-- <p class="subtitle">Understanding Your Results</p> -->
+                <h2>Understanding Your Results</h2>
+                <div class="intro-bullets">
+                    <ul>
+                        <li><strong>What is my refresh rate?</strong> This tool measures your browser’s frame rate and shows your monitor’s refresh rate in Hz.</li>
+                        <li><strong>Stuck at 60Hz?</strong> Enable 120Hz or 144Hz in your system display settings and use a DisplayPort or HDMI 2.0/2.1 cable.</li>
+                        <li><strong>Mobile supported?</strong> works on iPhone and Android devices with high-refresh-rate screens in any modern browser.</li>
+                        <li><strong>Is this showing FPS or Hz?</strong> Your browser’s frame rate is usually limited by your display’s refresh rate, so FPS is roughly equal to Hz.</li>
+                    </ul>
+                </div>
+
+                <!-- 在 Hero 区域，H1 下面，Hz Card 上面 -->
+
+                
+            </section>
+
+            <!-- 4. How to Use (操作指南 - 您要求加入的部分) -->
+            <section class="content-section">
+                <h2>How to Use This Hz Test</h2>
+                <div class="steps-container">
+                    <ol class="steps-list">
+                        <li><strong>Prepare: For more accurate results:</strong> close any resource-heavy apps or browser tabs that may affect your computer’s performance.</li>
+                        <li><strong>View Result:</strong> The test begins automatically when the page loads, and your screen’s estimated refresh rate is shown in real time in the box above.</li>
+                        <li><strong>Check the visual bar:</strong> Watch the moving bar in the Visual Indicator to see a visual representation of your screen’s smoothness.</li>
+                        <li><strong>Verify:</strong> After a few seconds, your screen’s final stable refresh rate will appear. Click “Test Again” to run the measurement once more.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>What is Screen Refresh Rate?</h2>
+                <p>The refresh rate of a screen, expressed in Hertz (Hz), indicates how many times per second the display updates its image. Whether you’re checking the Hz of a gaming monitor, evaluating the refresh rate of a new TV, or testing the frame rate of a mobile device, the idea remains the same: a higher refresh rate generally delivers smoother motion.</p>
+                
+                <div class="troubleshoot-box">
+                    <div class="troubleshoot-card">
+                        <h3>Smoother Motion:</h3>
+                        <p>A higher refresh rate allows motion to appear more fluid and stable. While the improvement is most obvious in fast-paced games, it also enhances everyday interactions such as scrolling through apps or web pages.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>Reduced Motion Blur:</h3>
+                        <p>When more frames are displayed each second, moving elements retain greater sharpness and clarity — an important factor in achieving a clean, visually comfortable viewing experience.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>Improved Responsiveness:</h3>
+                        <p>For gaming, a higher refresh rate can help reduce input lag and make on-screen actions respond more immediately to your controls.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="content-section">
+                <h2>Understanding Common Refresh Rates (60Hz vs 120Hz vs 144Hz)</h2>
+                <p>Not every display performs identically. A refresh rate test allows you to confirm whether your screen is delivering the level of performance it should. Here’s a brief overview:</p>
+                
+                <div class="troubleshoot-box">
+                    <div class="troubleshoot-card">
+                        <h3>60Hz - The Standard</h3>
+                        <p>A 60Hz refresh rate has long been the baseline for office monitors, laptops, and many older televisions. It works well for everyday tasks such as web browsing or viewing standard video content.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>90Hz & 120Hz - The New Mobile & Mid-Tier Standard</h3>
+                        <p>Many recent smartphones and mid-tier gaming monitors now support 90Hz or 120Hz refresh rates. Compared with 60Hz, a 120Hz refresh rate can deliver visibly smoother motion, particularly when scrolling through apps or playing mobile games.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>144Hz & Higher - The Gaming Sweet Spot</h3>
+                        <p>For PC gaming, 144Hz is often viewed as a strong balance between performance and cost. If a 144Hz refresh rate test reports the full value, it indicates that your system can support competitive play with very smooth and clearly rendered motion.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Troubleshooting (痛点解决) -->
+            <section class="content-section">
+                <h2>Why is my 144Hz monitor showing 60Hz?</h2>
+                <p>This is the most common issue for gamers. If you bought a high-refresh-rate screen but see "60 Hz" above, try these fixes:</p>
+                
+                <div class="troubleshoot-box">
+                    <div class="troubleshoot-card">
+                        <h3>1. Check OS Settings</h3>
+                        <p>Windows and macOS default to 60Hz. Go to <strong>Display Settings > Advanced Display</strong> and manually select the highest Refresh Rate.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>2. Wrong Cable</h3>
+                        <p>Old <strong>HDMI</strong> cables are often capped at 60Hz. Switch to a <strong>DisplayPort (DP)</strong> cable or a certified HDMI 2.1 cable for 144Hz+.</p>
+                    </div>
+                    <div class="troubleshoot-card">
+                        <h3>3. Browser Limit</h3>
+                        <p>Some browsers throttle FPS to save battery. Plug in your laptop charger and ensure "Hardware Acceleration" is enabled in browser settings.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Knowledge Base (Hz vs FPS) -->
+            <section class="content-section">
+                <h2>Hz vs. FPS: What's the difference?</h2>
+                <ul>
+                    <li><strong>Hz (Hertz):</strong> The speed of your <em>hardware</em> (Monitor). It dictates the maximum frames your screen can physically redraw per second.</li>
+                    <li><strong>FPS (Frames Per Second):</strong> The speed of your <em>software</em> (Game/GPU).</li>
+                </ul>
+                <p>For the smoothest gaming experience, your FPS should match or exceed your monitor's Hz (e.g., 144 FPS on a 144Hz screen).</p>
+            </section>
+
+            <!-- 7. FAQ -->
+            <section class="content-section">
+                <h2>Refresh Rate FAQs</h2>
+                <div class="faq-item">
+                    <h3>What does Hz mean for a monitor?</h3>
+                    <p>Hz (Hertz) is the unit of frequency. For a monitor or any display, it indicates the refresh rate – the number of times the screen updates its image every second. A 60Hz monitor refreshes 60 times per second, while a 144Hz monitor refreshes 144 times per second.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Does HDMI support 144Hz?</h3>
+                    <p>HDMI 2.0 can deliver 144Hz at 1080p, while HDMI 2.1 extends support to 144Hz at 4K. In contrast, HDMI 1.4 is restricted to 60Hz at 1080p. For consistent 144Hz performance, a DisplayPort 1.2 connection or newer is recommended.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How to enable 120Hz on iPhone or Android?</h3>
+                    <p>iPhone: Open Settings → Accessibility → Motion, then turn Limit Frame Rate off to allow 120Hz.</br>
+                        Android: Open Settings → Display → Screen refresh rate, and choose 120Hz if your device supports it.
+                        Keep in mind that not all smartphones offer high-refresh-rate displays — 120Hz is available on iPhone 13 Pro and newer models, as well as on many flagship Android devices released from 2020 onward.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Do G-Sync or FreeSync change the refresh rate that gets measured?</h3>
+                    <p>G-Sync and FreeSync adjust the display’s refresh rate in real time to follow the GPU’s frame output. However, during this type of browser-based test, the refresh rate is normally measured at the monitor’s maximum capability, so you will generally see the peak Hz value even when adaptive sync is enabled.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is this an FPS Test?</h3>
+                    <p>Yes, this tool can operate as an FPS test. It reports the number of frames your browser renders each second. On most setups, the browser’s frame rate is capped by the display’s refresh rate, which means the measured FPS closely reflects the monitor’s actual Hz.</p>
+                </div>
+
+                 <div class="faq-item">
+                    <h3>My result is lower than expected. What can I do?</h3>
+                    <p>First, confirm that your monitor is set to its highest available refresh rate in your system’s display settings. Make sure your cable is appropriate for high-refresh-rate output — DisplayPort is recommended when supported. Update your graphics drivers, and close any resource-heavy applications while running the test. If your readings are still lower than expected, the limitation may come from your hardware or overall setup.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Does this test work on mobile phones?</h3>
+                    <p>Yes, this refresh rate test works on both smartphones and tablets through any modern mobile browser. It provides a straightforward way to check whether your device is actually operating at its intended 90Hz or 120Hz refresh rate.</p>
+                </div>
+
+
+                <div class="faq-item">
+                    <h3>Is 60Hz good enough?</h3>
+                    <p>For office work and movies, 60Hz is standard. For competitive gaming (CS:GO, Valorant), 144Hz or higher is recommended for lower input lag.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is V-Sync?</h3>
+                    <p>V-Sync locks your game's FPS to your monitor's Hz to prevent "screen tearing". This test relies on V-Sync logic to measure your refresh rate.</p>
+                </div>
+            </section>
+
+            <!-- Bottom Nav -->
+            <section class="color-grid-section">
+               <h2>Explore Other Test Colors</h2>
+                <div class="color-grid">
+                    <a href="/black-screen" class="color-card black" title="Black Screen">
+                        <div class="color-preview"></div><span>Black</span>
+                    </a>
+                     <a href="/white-screen" class="color-card white" title="White Screen">
+                        <div class="color-preview"></div><span>White</span>
+                    </a>
+                    <!-- <a href="/red-screen.html" class="color-card red" title="Red Screen">
+                        <div class="color-preview"></div><span>Red</span>
+                    </a>
+                    <a href="/green-screen.html" class="color-card green" title="Green Screen">
+                        <div class="color-preview"></div><span>Green</span>
+                    </a>
+                    <a href="/blue-screen.html" class="color-card blue" title="Blue Screen">
+                        <div class="color-preview"></div><span>Blue</span> -->
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2025 ScreenTest.run. Simple tools for display perfection.
+        </footer>
+    </div>
+
+    <script>
+        // === Hz Detection Engine ===
+        const hzDisplay = document.getElementById('hz-val');
+        const statusText = document.getElementById('hz-status');
+        const restartBtn = document.getElementById('btn-restart');
+        
+        let frames = 0;
+        let lastTime = performance.now();
+        let animationId;
+        let isRunning = true;
+        let sampleCount = 0;
+        
+        // 核心检测逻辑
+        function loop(timestamp) {
+            if (!isRunning) return;
+
+            frames++;
+            const elapsed = timestamp - lastTime;
+            
+            // 每 500ms 更新一次读数，提升响应感
+            if (elapsed >= 500) {
+                const fps = Math.round((frames * 1000) / elapsed);
+                
+                if (fps > 0) {
+                    hzDisplay.innerText = fps;
+                    // 这里也从 statusDot 改为文字变色
+                    statusText.innerText = "Monitoring...";
+                    statusText.style.color = "#00ff9d";
+                }
+                
+                frames = 0;
+                lastTime = timestamp;
+                sampleCount++;
+
+                // 模拟“检测完成”：大约 3 秒后停止
+                if (sampleCount > 6) {
+                    finishTest(fps);
+                    return; 
+                }
+            }
+            
+            animationId = requestAnimationFrame(loop);
+        }
+
+        // 测试完成
+        function finishTest(finalFps) {
+            isRunning = false;
+            cancelAnimationFrame(animationId);
+            statusText.innerText = `Result: ${finalFps} Hz`;
+            statusText.style.color = "#00ff9d"; // 结果变绿
+            restartBtn.style.display = "inline-block"; // 显示重测按钮
+        }
+
+        // 重置测试
+        function restartTest() {
+            isRunning = true;
+            frames = 0;
+            sampleCount = 0;
+            lastTime = performance.now();
+            hzDisplay.innerText = "--";
+            statusText.innerText = "Calculating...";
+            statusText.style.color = "#888";
+            restartBtn.style.display = "none";
+            requestAnimationFrame(loop);
+        }
+
+        // 绑定按钮事件
+        restartBtn.addEventListener('click', restartTest);
+
+        // 页面加载即开始
+        requestAnimationFrame(loop);
+
+        // 自动生成“最新”日期，让 Google 觉得由于一直在维护
+        const dateEl = document.getElementById('update-date');
+        const now = new Date();
+        // 显示格式例如：Updated: December 2025
+        const options = { year: 'numeric', month: 'long' }; 
+        dateEl.innerText = "Updated: " + now.toLocaleDateString('en-US', options);
+
+                // --- 移动端汉堡菜单 ---
+        const navToggle = document.querySelector('.nav-toggle');
+        const headerEl = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.top-nav a');
+
+        if (navToggle && headerEl) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = headerEl.classList.toggle('nav-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            // 点击任意菜单链接后自动收起菜单（移动端体验更好）
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerEl.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9W9M2SD96Q');
+    </script>
+</body>
+</html>

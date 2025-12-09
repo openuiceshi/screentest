@@ -12,26 +12,82 @@
     <link rel="preconnect" href="https://www.googletagmanager.com">
 
     
-    <!-- Favicon (这里暂时用emoji代替，建议换成您的SVG) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
-
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    
     <!-- Social Media Meta Tags -->
     <meta property="og:title" content="Dead Pixel Test - Check Monitor Defects | ScreenTest.run">
     <meta property="og:description" content="The easiest way to check your monitor for dead pixels. Fullscreen, dark mode, no ads. Works on PC, Mac, and Mobile.">
-    <meta property="og:image" content="https://screentest.run/img/share.jpg"> <!-- 替换为您实际图片的URL -->
+    <meta property="og:image" content="https://screentest.run/img/share.jpg">
     <meta property="og:url" content="https://screentest.run/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
-        <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-9W9M2SD96Q');
-        </script>
+        <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a dead pixel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A dead pixel is a pixel on a display that no longer emits light. It typically appears as a small black dot, most noticeable against light or white backgrounds. In most cases, this occurs when all three of the pixel’s sub-pixels—red, green, and blue—fail to operate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a stuck pixel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A stuck pixel is a pixel in which one or more of its sub-pixels—red, green, or blue—remain continuously active. As a result, the pixel shows a single persistent color, such as red, green, blue, or white when all three sub-pixels stay on."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does a dead pixel look like?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A dead pixel appears as a small black dot on the screen. Because it represents a single non-lit pixel, it is easiest to see on a solid white background, where it remains a dark, unmoving spot that never changes color."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can dead or stuck pixels be fixed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dead pixels are usually the result of permanent hardware failure and cannot be repaired. Stuck pixels, on the other hand, may sometimes respond to certain fixes. Common approaches include using software that rapidly cycles colors over the affected area or applying light pressure with a soft cloth — though this must be done with great care, as improper force can cause additional damage. Even with these methods, success is not guaranteed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between a stuck pixel vs. a dead pixel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A dead pixel appears black because it no longer produces light. A stuck pixel, by contrast, stays illuminated in a fixed color — such as red, green, blue, or even white — because one or more of its sub-pixels remain continuously powered."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What causes dead pixels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Defects usually occur during the manufacturing process of the LCD/OLED panel. They can also develop over time due to physical damage, overheating, or component aging."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this test work on Mobile (iPhone/Android)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. ScreenTest.run is responsive. On high-resolution mobile displays (Retina/OLED), you may need to look very closely or use a magnifying glass, as pixels are microscopic."
+      }
+    }
+  ]
+}
+</script>
+
 
     <style>
         /* === 核心变量：暗黑极客风 === */
@@ -60,7 +116,7 @@
 
         /* === 布局 === */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
             width: 100%;
@@ -79,14 +135,14 @@
         /* === Hero 区域 (核心功能) === */
         .hero {
             text-align: center;
-            padding: 80px 0 60px;
+            padding: 60px 0 60px;
             display: flex;
             flex-direction: column;
             align-items: center; 
         }
 
         h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2rem, 3vw, 3.5rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
@@ -117,6 +173,7 @@
             border-radius: 50px;
             cursor: pointer;
             border: none;
+            margin-bottom: 20px;
             transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
@@ -127,7 +184,7 @@
         
         /* === 赚钱钩子 (Hook Section) === */
         .hz-detector {
-            margin-top: 60px;
+            margin-top: 20px;
             background: var(--card-bg);
             border: 1px solid #222;
             border-radius: 16px;
@@ -168,7 +225,7 @@
 
         /* === SEO 内容区 (放在下面) === */
         .content-section {
-            margin-top: 80px;
+            margin-top: 40px;
             padding-top: 40px;
             border-top: 1px solid #222;
             color: #ccc;
@@ -216,6 +273,395 @@
             h1 { font-size: 2.2rem; }
             .hz-detector { width: 100%; }
         }
+
+        /* === 颜色入口网格 (新加的) === */
+        .color-grid-section {
+            text-align: center;
+            /*padding: 40px 0;*/
+            margin-top: 20px;
+        }
+
+        .color-grid-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .color-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 15px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .color-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 50px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .color-card span {
+            color: var(--text-main);
+            font-family: var(--font-stack);
+            font-size: 0.9rem;
+        }
+
+        /* 具体颜色定义 (完整12色) */
+        .color-card.white .color-preview { background-color: #FFFFFF; }
+        .color-card.black .color-preview { background-color: #000000; border: 1px solid #444; }
+        .color-card.red .color-preview { background-color: #FF0000; }
+        .color-card.green .color-preview { background-color: #00FF00; }
+        .color-card.blue .color-preview { background-color: #0000FF; }
+        
+        /* 灰度 */
+        .color-card.grey50 .color-preview { background-color: #808080; }
+        .color-card.grey25 .color-preview { background-color: #404040; }
+        .color-card.grey75 .color-preview { background-color: #BFBFBF; }
+        
+        /* 补色 */
+        .color-card.yellow .color-preview { background-color: #FFFF00; }
+        .color-card.magenta .color-preview { background-color: #FF00FF; }
+        .color-card.cyan .color-preview { background-color: #00FFFF; }
+        .color-card.orange .color-preview { background-color: #FFA500; }
+
+        /* === 右上角导航 === */
+        .top-nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            /*font-family: var(--font-stack);*/
+        }
+
+        /* Hz Test: 醒目一点，引导点击 */
+        .nav-link.hz {
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        .nav-link.hz:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* White Screen: 白底黑字 */
+        .nav-link.white {
+            background: #eee;
+            color: #000;
+            border: 1px solid #fff;
+        }
+        .nav-link.white:hover {
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        /* Black Screen: 黑底灰边 */
+        .nav-link.black {
+            background: #000;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        .nav-link.black:hover {
+            border-color: #666;
+        }
+
+        /* 移动端适配：如果屏幕太小，稍微缩小一点间距 */
+        @media (max-width: 600px) {
+            .top-nav { gap: 8px; }
+            .nav-link { padding: 5px 8px; font-size: 0.85rem; }
+        }
+
+        /* 汉堡按钮基础样式：桌面端隐藏 */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            /*padding: 6px;*/
+            margin-left: auto;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 999px;
+            margin: 3px 0;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        /* 移动端：显示汉堡按钮，折叠菜单 */
+        @media (max-width: 720px) {
+            header {
+                position: relative;
+            }
+
+            /* logo 左，汉堡右 */
+            header .logo {
+                z-index: 20;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 20;
+            }
+
+            /* 默认隐藏菜单 */
+            .top-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                background: var(--card-bg);
+                border: 1px solid #333;
+                border-radius: 12px;
+                padding: 10px 12px;
+                display: none;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 180px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            }
+
+            /* 打开状态：显示菜单 */
+            header.nav-open .top-nav {
+                display: flex;
+            }
+
+            .nav-link {
+                display: block;
+                width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            /* 汉堡按钮三条线的开合动画（可选） */
+            header.nav-open .nav-toggle span:nth-child(1) {
+                transform: translateY(10px) rotate(45deg);
+            }
+            header.nav-open .nav-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+            header.nav-open .nav-toggle span:nth-child(3) {
+                transform: translateX(0px) translateY(-6px) rotate(-45deg);
+            }
+
+              /* 整体排版稍微紧凑一点 */
+            .container {
+                padding: 0 16px;
+            }
+
+            /* Hero 区：收紧上下留白，让首屏更聚焦 */
+            .hero {
+                padding: 40px 0 40px;
+            }
+
+            h1 {
+                font-size: 1.9rem;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+                margin-bottom: 28px;
+            }
+
+            /* 启动器：改为自适应宽度，避免 480px 溢出 */
+            .monitor-launcher {
+                width: 100%;
+                max-width: 100%;
+                aspect-ratio: 16 / 9;
+                height: auto;
+                margin-bottom: 20px;
+            }
+
+            .launch-text {
+                font-size: 1rem;
+            }
+
+            .launch-sub {
+                font-size: 0.75rem;
+            }
+
+            /* 测试顺序的小条，改为竖向排，不挤一行 */
+            .pattern-legend {
+                flex-direction: column;
+                align-items: flex-start;
+                border-radius: 12px;
+                margin-bottom: 24px;
+            }
+
+            .legend-dots {
+                flex-wrap: wrap;
+            }
+
+            /* Hz 检测卡片：缩小内边距，填满宽度 */
+            .hz-detector {
+                padding: 20px;
+                width: 100%;
+            }
+
+            .hz-value {
+                font-size: 2.4rem;
+            }
+
+            /* 颜色网格：在手机上放宽一点间距 */
+            .color-grid-section {
+                margin-top: 30px;
+            }
+
+            .color-grid {
+                max-width: 100%;
+                gap: 12px;
+            }
+
+            /* 内容区和 footer 稍微收紧一点 */
+            .content-section {
+                margin-top: 32px;
+                padding-top: 24px;
+            }
+
+            footer {
+                padding: 30px 0;
+                font-size: 0.85rem;
+            }
+        }
+
+
+        /* === 新的启动器样式 === */
+        .monitor-launcher {
+            width: 480px;
+            height: 280px;
+            background-color: #000;
+            border: 2px solid #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 悬停效果：边框发光，整体上浮 */
+        .monitor-launcher:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .launcher-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .play-icon {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .launch-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .launch-sub {
+            font-size: 0.8rem;
+            color: #666;
+            font-family: var(--font-stack);
+        }
+        
+        /* 激活状态 */
+        .monitor-launcher:active {
+            transform: scale(0.98);
+        }
+
+        /* === 视觉化图例样式 === */
+        .pattern-legend {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            font-family: var(--font-stack);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            background: rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+        }
+
+        .legend-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .legend-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .hz-cta {
+        /* ...原有样式... */
+        margin-top: 15px;
+        background: rgba(0, 255, 157, 0.1); /* 给个淡淡的绿色背景 */
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+        text-decoration: none; /* 去掉下划线 */
+        transition: all 0.2s;
+        }
+
+        .hz-cta:hover {
+            background: var(--accent-color);
+            color: #000; /* 悬停变实心 */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 157, 0.3);
+        }
+
     </style>
 </head>
 <body>
@@ -224,43 +670,321 @@
     <div class="container">
         <header>
             <div class="logo">ScreenTest<span>.run</span></div>
-            <!-- 以后这里放 Hz Test 链接 -->
+            
+            <!-- 汉堡按钮（桌面端隐藏，移动端显示） -->
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- 👇 新增的右上角导航 -->
+        <nav class="top-nav">
+        <!-- 建议顺便把赚钱的 Hz 也放上去 -->
+        <a href="/screen-refresh-rate-test" class="nav-link black" title="Screen Refresh Rate Test">Refresh Rate Test</a> 
+        <a href="/white-screen" class="nav-link black" title="White Screen Test">White Screen</a>
+        <a href="/black-screen" class="nav-link black" title="Black Screen Test">Black Screen</a>
+        </nav>
         </header>
 
         <main>
             <!-- Hero -->
             <section class="hero">
                 <h1>Dead Pixel <span class="highlight">Test</span></h1>
-                <p class="subtitle">The easiest way to check your monitor for dead pixels, stuck pixels, and screen defects. Fullscreen. No ads.</p>
-                <button class="start-btn" id="start-btn">Start Test</button>
+                <p class="subtitle">Check your display for dead or stuck pixels with this testing tool. Tap the section below to launch the full-screen examination, then click anywhere to switch through the color patterns.</p>
+                <!-- 新的：模拟显示器风格的启动器 -->
+                <div class="monitor-launcher" id="start-btn" role="button" tabindex="0">
+                    <div class="launcher-content">
+                        <span class="play-icon">▶</span>
+                        <span class="launch-text">Start Test</span>
+                        <span class="launch-sub">Click or Press Space</span>
+                    </div>
+                </div>
+                
+                <!-- 新的：视觉化测试顺序图例 (替代那行枯燥的文字) -->
+                <div class="pattern-legend">
+                    <div class="legend-label">Test Sequence:</div>
+                    <div class="legend-dots">
+                        <span class="dot" style="background:#000; border:1px solid #333;" title="Black"></span>
+                        <span class="dot" style="background:#fff;" title="White"></span>
+                        <span class="dot" style="background:#f00;" title="Red"></span>
+                        <span class="dot" style="background:#0f0;" title="Green"></span>
+                        <span class="dot" style="background:#00f;" title="Blue"></span>
+                        <span class="dot" style="background:#ff0;" title="Yellow"></span>
+                        <span class="dot" style="background:#0ff;" title="Cyan"></span>
+                        <span class="dot" style="background:#f0f;" title="Magenta"></span>
+
+                    </div>
+                </div>
+                
 
                 <!-- 赚钱的钩子：自动检测 Hz -->
                 <div class="hz-detector">
-                    <div class="hz-label">Detected Refresh Rate</div>
+                    <div class="hz-label">Estimated Refresh Rate</div>
                     <div class="hz-value" id="hz-display">-- Hz</div>
-                    <a href="/hz-test.html"  class="hz-cta" id="hz-link">Is this accurate? Test Motion Blur →</a>
+                    
+                    <!-- 文案修改重点：强调“验证”和“完整测试” -->
+                    <a href="/hz-test.html" class="hz-cta" id="hz-link">
+                        Is this accurate? <strong>Run Full Test →</strong>
+                    </a>
                 </div>
             </section>
 
-            <!-- SEO Content (为了让 Google 读懂) -->
-            <section class="content-section">
-                <h2>How to check for dead pixels?</h2>
-                <ol class="tips-list">
-                    <li>Clean your screen with a soft cloth to ensure you aren't seeing dust.</li>
-                    <li>Click the <strong>"Start Test"</strong> button above.</li>
-                    <li>The tool will enter full-screen mode.</li>
-                    <li>Click anywhere or press <strong>Space</strong> to cycle through colors (Red, Green, Blue, White, Black).</li>
-                    <li>Look carefully for any tiny dots that don't change color.</li>
-                    <li>Press <strong>ESC</strong> to exit the test.</li>
-                </ol>
+            <!-- 颜色测试入口网格 (完整版 - 12色) -->
+            <section class="color-grid-section">
+                <h2>Specific Screen Defect Tests</h2>
+                <div class="color-grid">
+                    <!-- 第一梯队：流量之王 -->
+                    <a href="/white-screen.html" class="color-card white" title="White Screen Test">
+                        <div class="color-preview"></div>
+                        <span>White</span>
+                    </a>
+                    <a href="/black-screen.html" class="color-card black" title="Black Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Black</span>
+                    </a>
+                    <!-- <a href="/red-screen.html" class="color-card red" title="Red Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Red</span>
+                    </a>
+                    <a href="/green-screen.html" class="color-card green" title="Green Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Green</span>
+                    </a>
+                    <a href="/blue-screen.html" class="color-card blue" title="Blue Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Blue</span>
+                    </a> -->
 
-                <h2>What are Dead vs. Stuck Pixels?</h2>
-                <p><strong>Dead Pixels</strong> are black dots that fail to turn on. They are usually permanent.</p>
-                <p><strong>Stuck Pixels</strong> are stuck on a specific color (Red, Green, or Blue). These can sometimes be fixed by flashing colors rapidly (feature coming soon).</p>
+                    <!-- 第二梯队：灰度测试 -->
+                    <!-- <a href="/grey-50-screen.html" class="color-card grey50" title="50% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>50% Grey</span>
+                    </a>
+                    <a href="/grey-25-screen.html" class="color-card grey25" title="25% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>25% Grey</span>
+                    </a>
+                    <a href="/grey-75-screen.html" class="color-card grey75" title="75% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>75% Grey</span>
+                    </a> -->
 
-                <h2>Common Screen Defects</h2>
-            <p>Use this tool to detect various display issues on <strong>LCD, LED, and OLED panels</strong>. Check for <strong>backlight bleeding</strong> in dark rooms, verify color accuracy, and spot <strong>stuck pixels</strong> (usually Red, Green, or Blue dots) versus dead pixels (Black dots).</p>
+                    <!-- 第三梯队：补色与美观 -->
+                    <!-- <a href="/yellow-screen.html" class="color-card yellow" title="Yellow Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Yellow</span>
+                    </a>
+                    <a href="/magenta-screen.html" class="color-card magenta" title="Magenta Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Magenta</span>
+                    </a>
+                    <a href="/cyan-screen.html" class="color-card cyan" title="Cyan Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Cyan</span>
+                    </a>
+                    <a href="/orange-screen.html" class="color-card orange" title="Orange Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Orange</span>
+                    </a> -->
+                </div>
             </section>
+
+          <section class="content-section">
+    
+    <!-- 1. 核心定义：什么是坏点 (SEO 核心词群) -->
+    <h2>Dead Pixels, Stuck Pixels, and Hot Pixels: How to Identify Each Type</h2>
+    <p>
+        While often used interchangeably, <strong>Dead Pixels</strong> and <strong>Stuck Pixels</strong> are different hardware defects found on LCD, LED, and OLED monitors. Understanding the difference is crucial for diagnosis and potential repair.
+    </p>
+
+    <!-- === 像素缺陷图谱 (CSS 纯代码模拟，无需图片) === -->
+<style>
+    .defect-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .defect-card {
+        background: #151515;
+        border: 1px solid #333;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s;
+    }
+    .defect-card:hover { transform: translateY(-3px); border-color: #555; }
+
+    /* 模拟屏幕像素网格 */
+    .pixel-demo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 15px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 5x5 网格 */
+        gap: 2px;
+        padding: 5px;
+        border-radius: 8px;
+    }
+    
+    .p-dot { width: 100%; height: 100%; border-radius: 2px; }
+
+    /* 1. 死点演示 (背景亮，点黑) */
+    .demo-dead { background: #eee; border: 2px solid #fff; }
+    .demo-dead .p-dot { background: #fff; box-shadow: inset 0 0 2px #ccc; }
+    .demo-dead .p-dot.bad { background: #000; box-shadow: none; } /* 黑点 */
+
+    /* 2. 卡死点演示 (背景暗，点RGB) */
+    .demo-stuck { background: #000; border: 2px solid #333; }
+    .demo-stuck .p-dot { background: #111; }
+    /* 让RGB坏点呈现闪烁或高亮感 */
+    .demo-stuck .p-dot.bad-r { background: #ff0000; box-shadow: 0 0 10px #ff0000; } 
+    
+    /* 3. 热噪点演示 (背景暗，点白) */
+    .demo-hot { background: #000; border: 2px solid #333; }
+    .demo-hot .p-dot { background: #111; }
+    .demo-hot .p-dot.bad-w { background: #ffffff; box-shadow: 0 0 10px #ffffff; }
+
+    .d-title { color: #fff; font-weight: 700; margin-bottom: 8px; font-size: 1.1rem; }
+    .d-desc { color: #888; font-size: 0.9rem; line-height: 1.5; text-align: left; }
+    .d-best { margin-top: 10px; font-size: 0.85rem; color: var(--accent-color); text-align: left; font-family: var(--font-stack); }
+</style>
+
+<div class="defect-grid">
+    
+    <!-- 卡片 1: Dead Pixel (死点) -->
+    <div class="defect-card">
+        <div class="pixel-demo demo-dead">
+            <!-- 5x5 grid generation -->
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot bad"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+        </div>
+        <div class="d-title">Dead Pixels</div>
+        <div class="d-desc">
+            A pixel that remains permanently <strong>OFF</strong> (Black). It fails to let backlight pass through.
+        </div>
+        <div class="d-best">Best seen on: White Screen</div>
+    </div>
+
+    <!-- 卡片 2: Stuck Pixel (卡死点/彩点) -->
+    <div class="defect-card">
+        <div class="pixel-demo demo-stuck">
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot bad-r"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+        </div>
+        <div class="d-title">Stuck Pixels (RGB)</div>
+        <div class="d-desc">
+            One sub-pixel (Red, Green, or Blue) is stuck permanently <strong>ON</strong>. It looks like a tiny colored dot.
+        </div>
+        <div class="d-best">Best seen on: Black Screen</div>
+    </div>
+
+    <!-- 卡片 3: Hot Pixel (热噪点/亮点) -->
+    <div class="defect-card">
+        <div class="pixel-demo demo-hot">
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot bad-w"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+            <div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div><div class="p-dot"></div>
+        </div>
+        <div class="d-title">Hot Pixels (White)</div>
+        <div class="d-desc">
+            All sub-pixels are stuck ON, creating a permanent <strong>White</strong> dot. Common on camera sensors or LCDs.
+        </div>
+        <div class="d-best">Best seen on: Black Screen</div>
+    </div>
+
+</div>
+<!-- === 像素缺陷图谱结束 === -->
+
+    
+
+    <!-- 2. 操作指南 (保留用户体验部分) -->
+    <h2>How to Run the Dead Pixel Test?</h2>
+    <ol class="tips-list">
+        <li><strong>Clean your screen:</strong> Use a microfiber cloth to ensure you aren't mistaking dust for pixel defects.</li>
+        <li><strong>Start the Tool:</strong> Click the button above to enter full-screen mode (Press <strong>F11</strong> if your browser doesn't maximize).</li>
+        <li><strong>Cycle Colors:</strong> Use the Left/Right arrow keys or click to switch between backgrounds.</li>
+        <li><strong>Inspect Carefully:</strong>
+            <ul style="margin-top: 5px; color: #888;">
+                <li>Use the <strong>White</strong> screen to find Dead Pixels (black spots).</li>
+                <li>Use the <strong>Black</strong> screen to find Stuck Pixels (bright spots) or Backlight Bleeding.</li>
+                <li>Use <strong>Red/Green/Blue</strong> screens to check specific sub-pixel health.</li>
+            </ul>
+        </li>
+        <li>If you also want to check how smoothly your display is driving frames, try our
+        <a href="/screen-refresh-rate-test" style="color:var(--text-main);">Screen Refresh Rate Test</a>. </li>
+    </ol>
+
+
+    <!-- 3. 权威标准 (建立信任 E-E-A-T) -->
+    <h2>Dead Pixels on Phones and TVs: What They Are and How to Check for Them</h2>
+    <p>
+        The testing method is essentially the same for most displays.</br>
+        On a phone—whether iPhone or Android—start the test and examine the screen up close; on high-resolution devices, zooming in can make small pixel issues easier to spot.</br>
+        For televisions, open this page using the TV’s built-in browser. View the screen from a comfortable distance and cycle through the test colors to look for irregularities across the larger panel.
+    </p>
+
+    <!-- 3. 权威标准 (建立信任 E-E-A-T) -->
+    <h2>ISO 13406-2 Standards & Warranty Policy</h2>
+    <p>
+        Finding a dead pixel doesn't always guarantee a monitor replacement. Manufacturers (like Dell, LG, Samsung) follow the <strong>ISO 13406-2</strong> (updated to ISO 9241-307) standard, which categorizes screens into classes:
+    </p>
+    <ul class="tips-list">
+        <li><strong>Class I:</strong> Zero defects allowed. (High-end medical or military displays).</li>
+        <li><strong>Class II:</strong> The most common consumer standard. It typically allows 2-5 dead or stuck pixels per million pixels before a warranty claim is valid.</li>
+    </ul>
+    <p><em>Check your manufacturer's specific "Zero Bright Dot" policy for details.</em></p>
+
+    <!-- 4. FAQ (针对性问答 - 增加关键词密度) -->
+    <h2 style="margin-top: 40px;">Frequently Asked Questions</h2>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">What is a dead pixel?</h3>
+        <p>A dead pixel is a pixel on a display that no longer emits light. It typically appears as a small black dot, most noticeable against light or white backgrounds. In most cases, this occurs when all three of the pixel’s sub-pixels—red, green, and blue—fail to operate.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">What is a stuck pixel?</h3>
+        <p>A stuck pixel is a pixel in which one or more of its sub-pixels—red, green, or blue—remain continuously active. As a result, the pixel shows a single persistent color, such as red, green, blue, or white when all three sub-pixels stay on.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">What does a dead pixel look like?</h3>
+        <p>A dead pixel appears as a small black dot on the screen. Because it represents a single non-lit pixel, it is easiest to see on a solid white background, where it remains a dark, unmoving spot that never changes color.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">Can dead or stuck pixels be fixed?</h3>
+        <p>Dead pixels are usually the result of permanent hardware failure and cannot be repaired. Stuck pixels, on the other hand, may sometimes respond to certain fixes. Common approaches include using software that rapidly cycles colors over the affected area or applying light pressure with a soft cloth — though this must be done with great care, as improper force can cause additional damage. Even with these methods, success is not guaranteed.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">What is the difference between a stuck pixel vs. a dead pixel?</h3>
+        <p>A dead pixel appears black because it no longer produces light.
+        A stuck pixel, by contrast, stays illuminated in a fixed color — such as red, green, blue, or even white — because one or more of its sub-pixels remain continuously powered.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">What causes dead pixels?</h3>
+        <p>Defects usually occur during the manufacturing process of the LCD/OLED panel. They can also develop over time due to physical damage, overheating, or component aging.</p>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <h3 style="font-size: 1.1rem; color: #fff; margin-bottom: 5px;">Does this test work on Mobile (iPhone/Android)?</h3>
+        <p>Yes. <strong>ScreenTest.run</strong> is responsive. On high-resolution mobile displays (Retina/OLED), you may need to look very closely or use a magnifying glass, as pixels are microscopic.</p>
+    </div>
+
+</section>
         </main>
 
         <footer>
@@ -385,6 +1109,38 @@
         // 页面加载后开始计算
         requestAnimationFrame(countFps);
 
+
+                // --- 逻辑 3: 移动端汉堡菜单 ---
+        const navToggle = document.querySelector('.nav-toggle');
+        const headerEl = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.top-nav a');
+
+        if (navToggle && headerEl) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = headerEl.classList.toggle('nav-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            // 点击菜单项后自动收起菜单（移动端体验更好）
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerEl.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+
     </script>
+
+      <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-9W9M2SD96Q');
+        </script>
 </body>
 </html>

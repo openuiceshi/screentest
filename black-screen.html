@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Title: 核心词 (Black Screen) + 痛点词 (Backlight Bleed, Stuck Pixels) -->
+    <title>Black Screen - Backlight Bleed Test & Stuck Pixels Check | ScreenTest.run</title>
+    
+    <!-- Meta Description: 强调 OLED 省电和漏光测试，点击率优化 -->
+    <meta name="description" content="Instant full-screen pure black display (#000000). The best tool to check for backlight bleeding, identify stuck pixels, and save battery on OLED screens.">
+    
+    <link rel="canonical" href="https://screentest.run/black-screen" />
+
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Black Screen Tool - Bleed Test & OLED Saver | ScreenTest.run">
+    <meta property="og:description" content="Turn your screen completely black. Perfect for checking backlight bleeding, finding stuck pixels, and saving OLED battery life.">
+    <meta property="og:url" content="https://screentest.run/black-screen">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+   <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this really \"pure\" black?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We render the color code #000000. On OLED screens, this means the pixels turn off completely. On LCDs, it will be as dark as your backlight allows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I test for dead pixels (black dots)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dead pixels are black, so they are invisible on a black screen. You must use our White Screen Test to find them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "My screen turns off completely / I can't see bleed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Modern TVs and Mini-LED monitors often use local dimming, which turns off the backlight entirely on a pure black screen. To test for bleed properly, try a dark grey screen or any slightly elevated brightness level to force the backlight on."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this All Black Screen compatible with both my phone and computer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it is fully responsive, ensuring an optimal All Black Screen experience across all modern devices and browsers, including iPhones, Android phones, tablets, and desktops."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do I see dust so clearly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Light-colored dust particles reflect monitor light. Against a pure black background, this contrast is maximized, making it an excellent mode for cleaning your screen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I exit the black screen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply click anywhere on the screen, press the ESC key on your keyboard, or swipe Back if you are on a mobile device."
+          }
+        }
+      ]
+    }
+    </script>
+
+
+    <style>
+        /* === 核心变量 (严格保持一致) === */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --accent-color: #00ff9d; 
+            --font-stack: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === Header === */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo a { text-decoration: none; color: #fff; }
+        .logo span { color: var(--accent-color); }
+
+        .top-nav { display: flex; gap: 15px; align-items: center; }
+        .nav-link { 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+            /*font-family: var(--font-stack); */
+        }
+        .nav-link.home { color: #fff; border: 1px solid #333; }
+        .nav-link.home:hover { border-color: #666; background: #222; }
+        .nav-link.hz { color: var(--accent-color); border: 1px solid var(--accent-color); }
+        .nav-link.hz:hover { background: var(--accent-color); color: var(--bg-color); }
+
+        /* === Hero Section === */
+        .hero {
+            text-align: center;
+            padding: 60px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        h1 {
+            font-size: clamp(2rem, 3vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+        
+        /* 黑色页面的 H1 特效：使用银灰渐变，在黑底上营造"黑光"感 */
+        h1 .black-highlight {
+            background: linear-gradient(120deg, #ffffff, #666666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto 30px;
+        }
+
+        /* 按钮保持白色，以确保最佳对比度和点击率 */
+        .start-btn {
+            display: inline-block;
+            background: #FFFFFF;
+            color: #000000;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            /*border: 2px solid transparent;*/
+            transition: all 0.2s;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+            background: #fff;
+        }
+
+        /* === Content Section General === */
+        .content-section {
+            /*margin-top: 60px;*/
+            padding-top: 20px;
+            /*border-top: 1px solid #222;*/
+            color: #ccc;
+            text-align: left;
+        }
+        .content-section h2 { margin-bottom: 30px; font-size: 1.5rem; color: #fff; }
+        .content-section h3 { font-size: 1.2rem; color: #fff; margin-bottom: 10px; 
+            /*font-family: var(--font-stack); */
+        }
+        .content-section p { margin-bottom: 15px; line-height: 1.8; color: #b0b0b0; font-size: 1.05rem;}
+        
+        /* === Use Case Grid === */
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .use-case-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 16px;
+            transition: border-color 0.2s;
+        }
+        .use-case-card:hover { border-color: #666; }
+        .use-case-card strong { color: #fff; }
+
+        /* === Steps List (How-to) === */
+        .steps-container {
+            background: #111;
+            padding: 30px;
+            border-radius: 12px;
+            /*border-left: 3px solid #fff;*/
+            margin-bottom: 50px;
+        }
+        .steps-list { margin-left: 20px; color: #ccc; }
+        .steps-list li { margin-bottom: 15px; font-size: 1.05rem; }
+        .steps-list strong { color: #fff; }
+
+        /* === Info List (Utilities) === */
+        .info-list {
+            list-style: none;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+        .info-list li {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-color);
+        }
+        .info-list strong { color: #fff; display: block; margin-bottom: 8px; font-size: 1.1rem; }
+
+        /* === Color Grid Section === */
+        .color-grid-section { 
+            text-align: center; 
+            padding: 60px 0; 
+            border-top: 1px solid #222; 
+            /*margin-top: 60px; */
+        }
+        .color-grid-section h2 { font-size: 1.6rem; margin-bottom: 40px; color: #fff; }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .color-card {
+            display: flex; flex-direction: column; align-items: center; text-decoration: none;
+            background: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 15px;
+            transition: transform 0.2s;
+        }
+        .color-card:hover { transform: translateY(-5px); 
+            border-color:var(--accent-color); 
+        }
+        .color-preview { width: 100%; height: 40px; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .color-card span { color: var(--text-main); font-family: var(--font-stack); font-size: 0.85rem; }
+        
+        /* 颜色定义 */
+        .color-card.white .color-preview { background-color: #FFFFFF; } /* Black页显示White入口 */
+        .color-card.red .color-preview { background-color: #FF0000; }
+        .color-card.green .color-preview { background-color: #00FF00; }
+        .color-card.blue .color-preview { background-color: #0000FF; }
+
+        /* === FAQ === */
+        .faq-item { margin-bottom: 10px; 
+            /*border-bottom: 1px solid #222; */
+            padding-bottom: 20px; 
+        }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item h3 { color: #eee; font-size: 1.15rem; margin-bottom: 10px; }
+
+        footer { margin-top: auto; padding: 50px 0; border-top: 1px solid #222; text-align: center; color: #555; font-size: 0.9rem; }
+
+        /* === Fullscreen Layer (Modified for Black) === */
+        #test-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000; /* 纯黑背景 */
+            z-index: 9999; display: none; cursor: none;
+        }
+        #test-hint {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.5); /* 文字改为浅色半透明，否则在黑底看不见 */
+            font-family: var(--font-stack); font-weight: bold;
+            pointer-events: none; transition: opacity 1s; text-align: center;
+        }
+
+        
+
+        /* === 黑色页面的 H1 特效 === */
+        h1 .black-highlight {
+            background: linear-gradient(120deg, #ffffff, #666666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        /* === 模拟显示器风格的启动器 (Black Screen 特供版) === */
+        .monitor-launcher {
+            width: 480px;
+            height: 280px;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            
+            /* 1. 模拟发光的黑屏 */
+            background-color: #000000;
+            border: 4px solid #333; /* 物理边框 */
+            border-radius: 12px;
+            
+            /* 2. 黑色屏幕的外发光 (微弱的白光，模拟屏幕边缘) */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* 悬停时 */
+        .monitor-launcher:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            border-color: #555;
+        }
+
+        /* 3. 中间的 HUD 内容层 (Black页用半透明白底) */
+        .launcher-content {
+            /*background: rgba(255, 255, 255, 0.1); */
+            padding: 15px 25px;
+            border-radius: 30px; 
+            backdrop-filter: blur(4px);
+            
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            
+            /*border: 1px solid rgba(255, 255, 255, 0.1);*/
+        }
+
+        /* 4. 文字颜色 (在黑屏上，文字要是白的) */
+        .play-icon { 
+            font-size: 1.8rem; 
+            color: var(--accent-color); 
+            margin-bottom: 2px;
+        }
+        .launch-text { 
+            font-size: 1rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+            color: #fff; /* 白色文字 */
+        }
+        .launch-sub { 
+            font-size: 0.75rem; 
+            font-family: var(--font-stack);
+            color: #ccc; /* 浅灰色副标题 */
+        }
+
+        .monitor-launcher:active { transform: scale(0.98); }
+
+        /* 汉堡按钮基础样式：桌面端隐藏 */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            /*padding: 6px;*/
+            margin-left: auto;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 999px;
+            margin: 3px 0;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+
+        /* ====== 移动端适配：<= 720px ====== */
+        @media (max-width: 720px) {
+            /* 顶部：汉堡菜单 + 折叠菜单 */
+            header {
+                position: relative;
+            }
+
+            .nav-toggle {
+                display: inline-flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 20;
+            }
+
+            /* 折叠菜单：默认隐藏，下拉面板 */
+            .top-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                margin-top: 8px;
+                background: var(--card-bg);
+                border: 1px solid #333;
+                border-radius: 12px;
+                padding: 10px 12px;
+                display: none;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 180px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            }
+
+            /* header 上有 nav-open class 时展开菜单（JS 控制） */
+            header.nav-open .top-nav {
+                display: flex;
+            }
+
+            .nav-link {
+                display: block;
+                width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+
+            /* 汉堡三条线的开合动画（可选） */
+            header.nav-open .nav-toggle span:nth-child(1) {
+                transform: translateY(10px) rotate(45deg);
+            }
+            header.nav-open .nav-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+            header.nav-open .nav-toggle span:nth-child(3) {
+                transform: translateX(0px) translateY(-6px) rotate(-45deg);
+            }
+
+            /* === 正文部分的移动端优化 === */
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 40px 0 32px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+
+            .start-btn {
+                width: 100%;
+                max-width: 180px;
+                padding: 14px 24px;
+                font-size: 1.05rem;
+            }
+
+            /* 启动器：自适应宽度，不再固定 480px */
+            .monitor-launcher {
+                width: 100%;
+                max-width: 100%;
+                aspect-ratio: 16 / 9;
+                height: auto;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            .launch-text {
+                font-size: 1rem;
+            }
+
+            .launch-sub {
+                font-size: 0.75rem;
+            }
+
+            /* 颜色网格：放宽一点间距 */
+            .color-grid-section {
+                padding: 40px 0;
+            }
+
+            .color-grid {
+                max-width: 100%;
+                gap: 12px;
+            }
+
+            /* 用例卡片：单列展示 */
+            .use-case-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+
+            .use-case-card {
+                padding: 20px;
+            }
+
+            /* 步骤区域：padding 收紧一点 */
+            .steps-container {
+                padding: 20px 18px;
+                margin-bottom: 30px;
+            }
+
+            .steps-list li {
+                font-size: 0.98rem;
+            }
+
+            /* info-list：单列展示，稍微紧凑些 */
+            .info-list li {
+                margin-bottom: 20px;
+                padding-left: 16px;
+            }
+
+            .info-list strong {
+                font-size: 1.02rem;
+            }
+
+            /* FAQ 字体略微缩小，阅读更舒服 */
+            .faq-item h3 {
+                font-size: 1.05rem;
+            }
+
+            .faq-item p {
+                font-size: 0.95rem;
+            }
+
+            /* 内容区和 footer 收紧上下间距 */
+            .content-section {
+                margin-top: 28px;
+                padding-top: 20px;
+            }
+
+            footer {
+                padding: 30px 0;
+                font-size: 0.85rem;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo"><a href="/">ScreenTest<span>.run</span></a></div>
+
+            <!-- 汉堡按钮：桌面端隐藏，移动端显示 -->
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="top-nav">
+                <a href="/" class="nav-link home">Dead Pixel Test</a>
+                <a href="/screen-refresh-rate-test" class="nav-link home">Refresh Rate Test</a>
+               <a href="/white-screen" class="nav-link home">White Screen</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>Black Screen</h1>
+                <p class="subtitle">
+                    Display a true black screen (#000000) — also known as a pure black or black color screen. One click to enter full-screen mode for pixel tests, bleed checks, and focus adjustments.
+                </p>
+                 <!-- 1. 快速入口：网页内全屏 -->
+                <button id="btn-quick-start" class="start-btn">Start Instantly</button>
+
+                <!-- 2. 沉浸入口：系统级全屏 -->
+                <div class="monitor-launcher" id="box-launch" role="button" tabindex="0">
+                    <div class="launcher-content">
+                        <span class="play-icon">▶</span>
+                        <span class="launch-text">Launch Full Black Screen</span>
+                        <span class="launch-sub">Click to Start</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 颜色测试入口网格 (完整版 - 12色) -->
+            <section class="color-grid-section">
+                <h2>Specific Screen Defect Tests</h2>
+                <div class="color-grid">
+                    <!-- 第一梯队：流量之王 -->
+                    <a href="/white-screen" class="color-card white" title="White Screen Test">
+                        <div class="color-preview"></div>
+                        <span>White</span>
+                    </a>
+                    <!-- <a href="/black-screen.html" class="color-card black" title="Black Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Black</span>
+                    </a> -->
+                    <!-- <a href="/red-screen.html" class="color-card red" title="Red Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Red</span>
+                    </a>
+                    <a href="/green-screen.html" class="color-card green" title="Green Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Green</span>
+                    </a>
+                    <a href="/blue-screen.html" class="color-card blue" title="Blue Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Blue</span>
+                    </a> -->
+
+                    <!-- 第二梯队：灰度测试 -->
+                    <!-- <a href="/grey-50-screen.html" class="color-card grey50" title="50% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>50% Grey</span>
+                    </a>
+                    <a href="/grey-25-screen.html" class="color-card grey25" title="25% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>25% Grey</span>
+                    </a>
+                    <a href="/grey-75-screen.html" class="color-card grey75" title="75% Grey Screen Test">
+                        <div class="color-preview"></div>
+                        <span>75% Grey</span>
+                    </a> -->
+
+                    <!-- 第三梯队：补色与美观 -->
+                    <!-- <a href="/yellow-screen.html" class="color-card yellow" title="Yellow Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Yellow</span>
+                    </a>
+                    <a href="/magenta-screen.html" class="color-card magenta" title="Magenta Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Magenta</span>
+                    </a>
+                    <a href="/cyan-screen.html" class="color-card cyan" title="Cyan Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Cyan</span>
+                    </a>
+                    <a href="/orange-screen.html" class="color-card orange" title="Orange Screen Test">
+                        <div class="color-preview"></div>
+                        <span>Orange</span>
+                    </a> -->
+                </div>
+            </section>
+
+            <!-- 2. How to (基础操作) -->
+            <!-- <section class="content-section">
+                <h2>Uses: Full-screen black display for pixel tests, OLED screen checks, cleaning, and focus.</h2>
+                <div class="steps-container">
+                    <ul class="steps-list">
+                        <li> True Black Screen for OLED/AMOLED Displays.</li>
+                        <li>Check for stuck or bright pixels (use together with the <a href="/" style="color:var(--text-main);">Dead Pixel Test</a>).</li>
+                        <li>Distraction-Free Focus and Cleaning: Use the 60s or 5-minute timer for uninterrupted sessions.</li>
+                        
+                    </ul>
+                </div>
+            </section> -->
+
+
+            <!-- 1. Primary Uses (SEO 核心痛点) -->
+            <section class="content-section">
+                <h2>Why Use a Full Black Screen?</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h3>Stuck/Bright Pixel Detection:</h3>
+                        <p>Use the black screen and then run the Dead Pixel Test to check for all color variations.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>OLED/AMOLED Power Saving:</h3>
+                        <p>On OLED and AMOLED displays, a full black screen turns the individual pixels off, which can greatly reduce power usage and help extend battery life.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Identify Screen Bleed (LCDs):</h3>
+                        <p>A full black screen is ideal for detecting backlight bleed on LCD or LED displays, making it easier to spot light leakage along the edges or in the corners.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Maximize Focus and Reduce Distractions:</h3>
+                        <p>A pure black screen removes visual noise, helping you stay concentrated or offering a clean, minimal backdrop..</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Effective Dust Spotting:</h3>
+                        <p>Dust and small particles stand out clearly against a dark background, allowing for more accurate and thorough screen cleaning.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Dark Mode Environment Testing:</h3>
+                        <p>Useful for developers and designers to preview applications or websites in a true dark setting, evaluating contrast and overall readability.</p>
+                    </div>
+
+
+                    <div class="use-case-card">
+                        <h3>Backlight Bleed Test</h3>
+                        <p>For LCD/IPS monitors, uneven light leaking from the edges is a common defect. A pitch-black screen in a dark room is the only way to inspect the severity of <strong>backlight bleeding</strong> or "clouding".</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Stuck Pixel Check</h3>
+                        <p>Unlike dead pixels (which are black), <strong>Stuck Pixels</strong> are permanently lit red, green, or blue dots. They shine brightly against a dark background, making them easy to spot and identify.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 优势 -->
+            <section class="content-section">
+                <h2>Benefits of ScreenTest.run’s Black Screen Tool</h2>
+                <div class="steps-container">
+                    <ol class="steps-list">
+                        <li>Instant Access: Works directly in your browser with no downloads or installations required.</li>
+                        <li>True Full-Screen Mode: Uses the entire display area (behavior may vary depending on the system).</li>
+                        <li>Works on All Devices: Built with a fully responsive layout that adapts to any screen size.</li>
+                        <li>User-Friendly Interface: Clean and intuitive design for seamless navigation.</li>
+                    </ol>
+                </div>
+            </section>
+            <!-- 2. How to (基础操作) -->
+            <section class="content-section">
+                <h2>How to Get a Full Black Screen?</h2>
+                <div class="steps-container">
+                    <ol class="steps-list">
+                        <li><strong>Click the Button:</strong> Hit the "Launch Full Black Screen" button above.</li>
+                        <li><strong>Allow Fullscreen:</strong> Your browser will expand to cover the entire display (including the taskbar).</li>
+                        <li><strong>Inspect:</strong> Dim your room lights and check for light leakage or bright dots.</li>
+                        <li><strong>Exit:</strong> Simply click anywhere, press <strong>ESC</strong>, or swipe back on mobile.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 3. Advanced Diagnostics (专业辨析 - 提升 E-E-A-T) -->
+            <section class="content-section">
+                <h2>Advanced Diagnostics: IPS Glow vs. Bleed</h2>
+                <p>Many users confuse "IPS Glow" with defect leakage. Use our black screen to tell the difference:</p>
+                
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h3>IPS Glow (Normal)</h3>
+                        <p>A faint, bluish/silvery glow visible from an angle. If you move your head or change the viewing angle, the glow changes intensity or position. This is a normal characteristic of IPS panels.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Backlight Bleed (Defect)</h3>
+                        <p>Light leaking from specific spots (usually corners). The leakage clearly stays in the same place even when you move your head. This indicates a physical assembly issue.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Creative & Utility Uses (长尾场景) -->
+            <section class="content-section">
+                <h2>OLED Power Saving & Utilities</h2>
+                <p>Beyond testing, a black screen is a versatile utility tool:</p>
+                <ul class="info-list">
+                    <li>
+                        <strong>OLED/AMOLED Battery Saver</strong>
+                        On OLED screens, black pixels are completely turned <strong>OFF</strong>. Using a full black screen consumes near-zero energy, helping to cool down your device or charge faster.
+                    </li>
+                    <li>
+                        <strong>Focus & Digital Detox</strong>
+                        Turn your second monitor black to eliminate distractions while working on your primary screen. It creates a "void" that helps reduce visual clutter.
+                    </li>
+                    <li>
+                        <strong>Mirror Mode</strong>
+                        On glossy screens (like MacBooks), a full black screen acts as a temporary mirror for a quick check-up.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 5. Technical Insights -->
+            <section class="content-section">
+                <h2>Technical Insights: True Black (#000000)</h2>
+                <p>
+                    Not all "black" is created equal.
+                </p>
+                <ul class="info-list">
+                    <li>
+                        <strong>LCD Monitors:</strong> A black screen works by blocking the backlight with liquid crystals. It is never truly "off," so you may see a faint dark grey glow in a dark room.
+                    </li>
+                    <li>
+                        <strong>OLED/Mini-LED:</strong> These technologies can dim or turn off individual pixels. Our tool renders Hex Code <code>#000000</code>, allowing these displays to achieve infinite contrast and "True Black."
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 6. FAQs -->
+            <section class="content-section">
+                <h2>Black Screen FAQs</h2>
+                
+                <div class="faq-item">
+                    <h3>Is this really "pure" black?</h3>
+                    <p>Yes. We render the color code <code>#000000</code>. On OLED screens, this means the pixels turn off completely. On LCDs, it will be as dark as your backlight allows.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I test for dead pixels (black dots)?</h3>
+                    <p>Dead pixels are black, so they are invisible on a black screen. You must use our <a href="/white-screen" style="color:var(--text-main);">White Screen Test</a> to find them.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>My screen turns off completely / I can't see bleed?</h3>
+                    <p>Modern TVs and Mini-LED monitors often use "Local Dimming," which turns off the backlight entirely on a pure black screen. To test for bleed properly, try Dark Grey Screen to force the backlight on.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is this All Black Screen compatible with both my phone and computer?</h3>
+                    <p>Yes, it is fully responsive, ensuring an optimal All Black Screen experience across all modern devices and browsers, including iPhones, Android phones, tablets, and desktops.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Why do I see dust so clearly?</h3>
+                    <p>Light-colored dust particles reflect monitor light. Against a pure black background, this contrast is maximized, making it an excellent mode for cleaning your screen.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I exit the black screen?</h3>
+                    <p>Simply click anywhere on the screen, press the ESC key on your keyboard, or swipe "Back" if you are on a mobile device.</p>
+                </div>
+            </section>
+
+            <!-- Footer Navigation: 替换了 Black，改为 White -->
+            <!-- section class="color-grid-section">
+                <h2>Explore Other Test Colors</h2>
+                <div class="color-grid">
+                    <a href="/white-screen.html" class="color-card white" title="Bright White Screen">
+                        <div class="color-preview"></div><span>White</span>
+                    </a>
+                    <a href="/red-screen.html" class="color-card red" title="Red Screen">
+                        <div class="color-preview"></div><span>Red</span>
+                    </a>
+                    <a href="/green-screen.html" class="color-card green" title="Green Screen">
+                        <div class="color-preview"></div><span>Green</span>
+                    </a>
+                    <a href="/blue-screen.html" class="color-card blue" title="Blue Screen">
+                        <div class="color-preview"></div><span>Blue</span>
+                    </a>
+                </div>
+            </section> -->
+        </main>
+
+        <footer>
+            &copy; 2025 ScreenTest.run. Simple tools for display perfection.
+        </footer>
+    </div>
+
+    <!-- Fullscreen Logic (Adapted for Black) -->
+    <div id="test-layer">
+        <div id="test-hint">
+            Click or Press ESC to Exit
+        </div>
+    </div>
+
+    <script>
+        const btnQuick = document.getElementById('btn-quick-start');
+        const btnBox = document.getElementById('box-launch');
+        const testLayer = document.getElementById('test-layer');
+        const hint = document.getElementById('test-hint');
+
+        // 通用：显示测试层并隐藏提示
+        function showLayer() {
+            document.body.style.overflow = 'hidden'; 
+            testLayer.style.display = 'block';
+            setTimeout(() => { hint.style.opacity = '0'; }, 3000);
+        }
+
+        // 通用：进入系统全屏
+        function enterSystemFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        }
+
+        // 1. 按钮点击：快速入口 (网页全屏)
+        btnQuick.addEventListener('click', () => {
+            showLayer();
+        });
+
+        // 2. 按钮点击：沉浸入口 (真全屏)
+        btnBox.addEventListener('click', () => {
+            showLayer();
+            enterSystemFullscreen();
+        });
+
+        // 3. 退出逻辑
+        function exitTest() {
+            testLayer.style.display = 'none';
+            hint.style.opacity = '0.4'; // 黑色页面这里通常设为 0.5 或更亮一点
+            document.body.style.overflow = ''; 
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(() => {});
+            }
+        }
+
+        // 监听点击退出 (点击屏幕任意位置退出)
+        testLayer.addEventListener('click', exitTest);
+
+        // 4. 【已修改】监听按键退出 (只保留 ESC)
+        document.addEventListener('keydown', (e) => {
+            // 只有当测试层打开时，且按下了 ESC 键，才退出
+            // 已删除 e.code === 'Space' 的判断
+            if (testLayer.style.display === 'block' && e.code === 'Escape') {
+                exitTest();
+            }
+        });
+
+        // 监听系统全屏变化 (防止用户按 F11 退出后，测试层还在)
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) exitTest();
+        });
+
+
+         // --- 移动端汉堡菜单 ---
+        const navToggle = document.querySelector('.nav-toggle');
+        const headerEl = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.top-nav a');
+
+        if (navToggle && headerEl) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = headerEl.classList.toggle('nav-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            // 点击任意菜单链接后自动收起菜单
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerEl.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+
+    </script>
+
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9W9M2SD96Q');
+    </script>
+</body>
+</html>
