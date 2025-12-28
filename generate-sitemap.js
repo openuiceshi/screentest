@@ -10,7 +10,11 @@ const urls = [
   { loc: '/', priority: 1.0, changefreq: 'daily' },
   { loc: '/screen-refresh-rate-test', priority: 0.9, changefreq: 'weekly' },
   { loc: '/white-screen', priority: 0.8, changefreq: 'weekly' },
-  { loc: '/black-screen', priority: 0.8, changefreq: 'weekly' }
+  { loc: '/black-screen', priority: 0.8, changefreq: 'weekly' },
+  { loc: '/red-screen', priority: 0.8, changefreq: 'weekly' },
+  { loc: '/green-screen', priority: 0.8, changefreq: 'weekly' },
+  { loc: '/blue-screen', priority: 0.8, changefreq: 'weekly' }
+
 ];
 
 // lastmod: use today's date in YYYY-MM-DD

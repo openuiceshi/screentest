@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Title: 覆盖 子像素测试 + 夜视功能 -->
+    <title>Red Screen - Night Vision Light & Dead Pixel Test | ScreenTest.run</title>
+    
+    <!-- Meta Description: 强调不伤眼、夜间使用和硬件测试 -->
+    <meta name="description" content="Instant full-screen red display (#FF0000). Essential for preserving night vision, testing red sub-pixels, and fixing stuck pixels. Free & Online.">
+    
+    <link rel="canonical" href="https://screentest.run/red-screen" />
+
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Red Screen Tool - Night Vision & Test | ScreenTest.run">
+    <meta property="og:description" content="Turn your screen completely red. Perfect for preserving night vision in dark rooms and identifying dead red sub-pixels.">
+    <meta property="og:url" content="https://screentest.run/red-screen">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- 结构化数据：FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the red screen completely free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The red screen tool is completely free to use and runs directly in your browser on any modern device."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the red screen work on both mobile and desktop devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The red screen is fully responsive and works across modern browsers on mobile phones, tablets, laptops, and desktop computers. Full-screen behavior may vary slightly depending on the device and browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the hexadecimal color code for red?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The pure red color displayed uses the hexadecimal value #FF0000, which represents the red primary channel in the RGB color model."
+          }
+        }
+      ]
+    }
+    </script>
+
+    
+
+    <style>
+        /* === 核心变量 (红色主题) === */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --accent-color: #00ff9d; /* 强调色改为红色 */
+            --font-stack: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === Header === */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo a { text-decoration: none; color: #fff; }
+        .logo span { color: #00ff9d; /* Logo 保持品牌绿，或者改成红色也可以，这里保持品牌一致性 */ }
+
+        .top-nav { display: flex; gap: 15px; align-items: center; }
+        .nav-link { 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+        }
+        .nav-link.home { color: #fff; border: 1px solid #333; }
+        .nav-link.home:hover { border-color: #666; background: #222; }
+        .nav-link.hz { color: #00ff9d; border: 1px solid #00ff9d; } /* Hz 保持绿色高亮 */
+        .nav-link.hz:hover { background: #00ff9d; color: var(--bg-color); }
+
+        /* === Hero Section === */
+        .hero {
+            text-align: center;
+            padding: 60px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        h1 {
+            font-size: clamp(2rem, 3vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+        
+        /* 针对红色的高亮样式 */
+        h1 .red-highlight {
+            background: linear-gradient(120deg, #FF0000, #CC0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto 10px;
+        }
+        .subtitle1 {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            max-width: 650px;
+            margin: 0 auto 20px;
+            margin-top: 10px;
+        }
+
+        /* 按钮样式：红色主题 */
+        .start-btn {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            border: none;
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+            /*background: #FF3333;*/
+        }
+
+        /* === Content Section === */
+        .content-section {
+            padding-top: 20px;
+            color: #ccc;
+            text-align: left;
+        }
+        .content-section h2 { margin-bottom: 30px; font-size: 1.5rem; color: #fff; }
+        .content-section h3 { font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+        .content-section p { margin-bottom: 15px; line-height: 1.8; color: #b0b0b0; font-size: 1.05rem;}
+        
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .use-case-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 16px;
+            transition: border-color 0.2s;
+        }
+        .use-case-card:hover { border-color: #666; }
+        .use-case-card strong { color: #fff; }
+
+        .steps-container {
+            background: #111;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+        .steps-list { margin-left: 20px; color: #ccc; }
+        .steps-list li { margin-bottom: 15px; font-size: 1.05rem; }
+        .steps-list strong { color: #fff; }
+
+        .info-list {
+            list-style: none;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+        .info-list li {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid #FF0000; /* 红色边框 */
+        }
+        .info-list strong { color: #fff; display: block; margin-bottom: 8px; font-size: 1.1rem; }
+
+        /* === Color Grid Section === */
+        .color-grid-section { 
+            text-align: center; 
+            padding: 60px 0; 
+            border-top: 1px solid #222; 
+        }
+        .color-grid-section h2 { font-size: 1.6rem; margin-bottom: 40px; color: #fff; }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .color-card {
+            display: flex; flex-direction: column; align-items: center; text-decoration: none;
+            background: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 15px;
+            transition: transform 0.2s;
+        }
+        .color-card:hover { transform: translateY(-5px); border-color:var(--accent-color); }
+        .color-preview { width: 100%; height: 40px; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .color-card span { color: var(--text-main); font-family: var(--font-stack); font-size: 0.85rem; }
+        
+        .color-card.white .color-preview { background-color: #FFFFFF; }
+        .color-card.black .color-preview { background-color: #000000; border: 1px solid #444; }
+        .color-card.red .color-preview { background-color: #FF0000; }
+        .color-card.green .color-preview { background-color: #00FF00; }
+        .color-card.blue .color-preview { background-color: #0000FF; }
+        .color-card.grey50 .color-preview { background-color: #808080; }
+        .color-card.grey25 .color-preview { background-color: #404040; }
+        .color-card.grey75 .color-preview { background-color: #BFBFBF; }
+        .color-card.yellow .color-preview { background-color: #FFFF00; }
+        .color-card.magenta .color-preview { background-color: #FF00FF; }
+        .color-card.cyan .color-preview { background-color: #00FFFF; }
+        .color-card.orange .color-preview { background-color: #FFA500; }
+
+        .faq-item { margin-bottom: 10px; padding-bottom: 20px; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item h3 { color: #eee; font-size: 1.15rem; margin-bottom: 10px; }
+
+        footer { margin-top: auto; padding: 50px 0; border-top: 1px solid #222; text-align: center; color: #555; font-size: 0.9rem; }
+
+        /* Fullscreen Layer - 关键修改：纯红背景 */
+        #test-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #FF0000; 
+            z-index: 9999; display: none; cursor: none;
+        }
+        #test-hint {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #000; font-family: var(--font-stack); font-weight: bold; /* 黑色字在红底上更清晰 */
+            pointer-events: none; transition: opacity 1s; text-align: center; opacity: 0.4;
+        }
+
+        /* 模拟显示器启动器 */
+        .monitor-launcher {
+            width: 480px;
+            height: 280px;
+            border: 2px solid #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .monitor-launcher:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(255, 0, 0, 0.15); /* 红色光晕 */
+        }
+        .launcher-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .play-icon { font-size: 2rem; margin-bottom: 5px; }
+        .launch-text { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .launch-sub { font-size: 0.8rem; font-family: var(--font-stack); }
+        .monitor-launcher:active { transform: scale(0.98); }
+
+        /* 移动端汉堡 */
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; margin-left: auto; }
+        .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 999px; margin: 3px 0; transition: transform 0.2s, opacity 0.2s; }
+
+        @media (max-width: 600px) { h1 { font-size: 2.5rem; } }
+        @media (max-width: 720px) {
+            header { position: relative; }
+            .nav-toggle { display: inline-flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; }
+            .top-nav { position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--card-bg); border: 1px solid #333; border-radius: 12px; padding: 10px 12px; display: none; flex-direction: column; gap: 8px; min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+            header.nav-open .top-nav { display: flex; }
+            .nav-link { display: block; width: 100%; text-align: left; font-size: 0.9rem; padding: 8px 10px; }
+            header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+            header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+            header.nav-open .nav-toggle span:nth-child(3) { transform: translateX(0px) translateY(-6px) rotate(-45deg); }
+            .container { padding: 0 16px; }
+            .hero { padding: 40px 0 32px; }
+            h1 { font-size: 2rem; margin-bottom: 20px; }
+            .subtitle { font-size: 0.98rem; margin-bottom: 16px; max-width: 100%; }
+            .subtitle1 { font-size: 0.8rem; max-width: 100%; margin-bottom: 20px; }
+            .start-btn { width: 100%; max-width: 180px; padding: 14px 24px; font-size: 1.05rem; }
+            .monitor-launcher { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; height: auto; margin-top: 20px; margin-bottom: 20px; }
+            .launch-text { font-size: 1rem; }
+            .launch-sub { font-size: 0.75rem; }
+            .color-grid-section { padding: 40px 0; }
+            .color-grid { max-width: 100%; gap: 12px; }
+            .use-case-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+            .use-case-card { padding: 20px; }
+            .steps-container { padding: 20px 18px; margin-bottom: 30px; }
+            .steps-list li { font-size: 0.98rem; }
+            .info-list li { margin-bottom: 20px; padding-left: 16px; }
+            .info-list strong { font-size: 1.02rem; }
+            .faq-item h3 { font-size: 1.05rem; }
+            .faq-item p { font-size: 0.95rem; }
+            .content-section { margin-top: 28px; padding-top: 20px; }
+            footer { padding: 30px 0; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo"><a href="/">ScreenTest.run<span></span></a></div>
+            
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
+            <nav class="top-nav">
+                <a href="/" class="nav-link home">Dead Pixel Test</a>
+                <a href="/screen-refresh-rate-test" class="nav-link home">Refresh Rate Test</a>
+                <a href="/black-screen" class="nav-link home">Black Screen</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>View a Full  <span class="red-highlight">Red Screen</span> with Vibrant Color</h1>
+                <p class="subtitle">
+                    An Instant Tool for a Bold Red Display – Enhance Your Screen’s Visual Impact.
+                </p>
+                <p class="subtitle1">
+                    Need a full red display? Tap below to enter full-screen mode for an uninterrupted experience.
+                </p>
+                <!-- 1. 快速入口 -->
+                <button id="btn-quick-start" class="start-btn">Start Instantly</button>
+
+                <!-- 2. 沉浸入口 -->
+                <div class="monitor-launcher" id="box-launch" role="button" tabindex="0" style="background-color: #FF0000; border-color: #CC0000;">
+                    <div class="launcher-content">
+                        <span class="play-icon" style="color: #fff;">▶</span>
+                        <span class="launch-text" style="color: #fff;">Launch Full Red Screen</span>
+                        <span class="launch-sub" style="color: #ffe;">Click to Start</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 颜色入口网格 -->
+            <section class="color-grid-section">
+                <h2>Specific Screen Defect Tests</h2>
+                <div class="color-grid">
+                    <a href="/white-screen" class="color-card white" title="White Screen Test">
+                        <div class="color-preview"></div><span>White</span>
+                    </a>
+                    <a href="/black-screen" class="color-card black" title="Black Screen Test">
+                        <div class="color-preview"></div><span>Black</span>
+                    </a>
+                    <!-- <a href="/red-screen" class="color-card red" title="Red Screen Test">
+                        <div class="color-preview"></div><span>Red</span>
+                    </a> -->
+                    <a href="/green-screen" class="color-card green" title="Green Screen Test">
+                        <div class="color-preview"></div><span>Green</span>
+                    </a>
+                    <a href="/blue-screen" class="color-card blue" title="Blue Screen Test">
+                        <div class="color-preview"></div><span>Blue</span>
+                    </a>
+                    <!-- <a href="/grey-50-screen" class="color-card grey50" title="50% Grey Screen Test">
+                        <div class="color-preview"></div><span>50% Grey</span>
+                    </a>
+                    <a href="/grey-25-screen" class="color-card grey25" title="25% Grey Screen Test">
+                        <div class="color-preview"></div><span>25% Grey</span>
+                    </a>
+                    <a href="/grey-75-screen" class="color-card grey75" title="75% Grey Screen Test">
+                        <div class="color-preview"></div><span>75% Grey</span>
+                    </a>
+                    <a href="/yellow-screen" class="color-card yellow" title="Yellow Screen Test">
+                        <div class="color-preview"></div><span>Yellow</span>
+                    </a>
+                    <a href="/magenta-screen" class="color-card magenta" title="Magenta Screen Test">
+                        <div class="color-preview"></div><span>Magenta</span>
+                    </a>
+                    <a href="/cyan-screen" class="color-card cyan" title="Cyan Screen Test">
+                        <div class="color-preview"></div><span>Cyan</span>
+                    </a>
+                    
+                    <a href="/orange-screen" class="color-card orange" title="Current Page">
+                        <div class="color-preview"></div><span>Orange</span>
+                    </a> -->
+                </div>
+            </section>
+
+            <!-- 1. Use Cases (针对红色重写) -->
+            <section class="content-section">
+                <h2>Common Uses for a Red Screen</h2>
+                <div class="use-case-grid">
+                    <div class="use-case-card">
+                        <h3>Preserve Night Vision</h3>
+                        <p>Red light does not break down rhodopsin, the pigment in your eyes used for night vision. Use this screen when stargazing or navigating a dark room.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Test Red Sub-pixels</h3>
+                        <p>LCD and OLED screens create colors using Red, Green, and Blue. This tool isolates the Red sub-pixels, making it easy to spot dead ones (which will look black).</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Fix Stuck Pixels</h3>
+                        <p>Rapidly flashing a red screen (or cycling colors) can sometimes "unstick" a pixel that is frozen on green or blue. It helps massage the liquid crystals.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Mood & Warning Light</h3>
+                        <p>Create a dramatic red atmosphere for photography, or use your phone as a warning signal or brake light in emergencies.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Benefits of ScreenTest.run’s Red Screen</h2>
+                <div class="steps-container">
+                    <ul class="steps-list">
+                        <li><strong>Instant Access:</strong> Runs directly in your browser with no downloads or installations required.</li>
+                        <li><strong>True Full-Screen Mode:</strong> Uses the entire display area (behavior may vary by system and browser).</li>
+                        <li><strong>Cross-Device Support:</strong> Designed with a responsive layout to work smoothly on desktops, tablets, and mobile devices.</li>
+                        <li><strong>User-Friendly Interface:</strong> Clean and intuitive design that requires no setup or learning curve.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. How to -->
+            <section class="content-section">
+                <h2>How to Get a Full Red Screen?</h2>
+                <div class="steps-container">
+                    <ol class="steps-list">
+                        <li><strong>Click the Button:</strong> Hit "Launch Full Red Screen" above.</li>
+                        <li><strong>Go Fullscreen:</strong> Your browser will cover the entire display.</li>
+                        <li><strong>Inspect:</strong> Look for any black dots (dead pixels) or use it as a light source.</li>
+                        <li><strong>Exit:</strong> Click anywhere or press <strong>ESC</strong> to return.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 3. Technical Specs -->
+            <section class="content-section">
+                <h2>Technical Details: The Color Red</h2>
+                <ul class="info-list">
+                    <li>
+                        <strong>Hex Code: #FF0000</strong>
+                        This is the purest digital red (RGB: 255, 0, 0). It activates the red phosphors or sub-pixels at maximum intensity.
+                    </li>
+                    <li>
+                        <strong>Low Energy (OLED)</strong>
+                        On OLED screens, red pixels consume less power than blue pixels, making a red screen a more battery-friendly choice for night clocks or always-on displays.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 4. FAQs -->
+            <section class="content-section">
+                <h2>Red Screen FAQs</h2>
+                <div class="faq-item">
+                    <h3>Is the red screen completely free to use?</h3>
+                    <p>Yes. The red screen tool is completely free to use and runs directly in your browser on any modern device.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Does the red screen work on both mobile and desktop devices?</h3>
+                    <p>Yes. The red screen is fully responsive and works across modern browsers on mobile phones, tablets, laptops, and desktop computers. Full-screen behavior may vary slightly depending on the device and browser.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is the hexadecimal color code for red?</h3>
+                    <p>The pure red color displayed uses the hexadecimal value #FF0000, which represents the red primary channel in the RGB color model.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            &copy; 2025 ScreenTest.run. Simple tools for display perfection.
+        </footer>
+    </div>
+
+    <!-- Fullscreen Logic (背景色改为红色) -->
+    <div id="test-layer">
+        <div id="test-hint">
+            Click or Press ESC to Exit
+        </div>
+    </div>
+
+    <script>
+        const btnQuick = document.getElementById('btn-quick-start');
+        const btnBox = document.getElementById('box-launch');
+        const testLayer = document.getElementById('test-layer');
+        const hint = document.getElementById('test-hint');
+
+        // 通用：显示测试层并隐藏提示
+        function showLayer() {
+            document.body.style.overflow = 'hidden'; 
+            testLayer.style.display = 'block';
+            setTimeout(() => { hint.style.opacity = '0'; }, 3000);
+        }
+
+        btnQuick.addEventListener('click', () => { showLayer(); });
+        btnBox.addEventListener('click', () => { showLayer(); enterSystemFullscreen(); });
+
+        function exitTest() {
+            testLayer.style.display = 'none';
+            hint.style.opacity = '0.4'; 
+            document.body.style.overflow = ''; 
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        testLayer.addEventListener('click', exitTest);
+        document.addEventListener('keydown', (e) => {
+            if (testLayer.style.display === 'block' && (e.code === 'Escape' || e.code === 'Space')) {
+                exitTest();
+            }
+        });
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) exitTest();
+        });
+
+        function enterSystemFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen();
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        }
+
+        const navToggle = document.querySelector('.nav-toggle');
+        const headerEl = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.top-nav a');
+
+        if (navToggle && headerEl) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = headerEl.classList.toggle('nav-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerEl.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9W9M2SD96Q');
+    </script>
+</body>
+</html>

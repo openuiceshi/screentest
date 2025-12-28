@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Title: 强调 Chroma Key (绿幕) 功能 -->
+    <title>Green Screen - Chroma Key Background & Pixel Test | ScreenTest.run</title>
+    
+    <!-- Meta Description: 针对视频创作者和硬件测试者优化 -->
+    <meta name="description" content="Instant full-screen green display (#00FF00). Perfect as a chroma key background for video calls, streaming, or testing green sub-pixels. Free & Online.">
+    
+    <link rel="canonical" href="https://screentest.run/green-screen" />
+
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Green Screen Tool - Chroma Key & Test | ScreenTest.run">
+    <meta property="og:description" content="Turn your screen completely green. The easiest way to get a green screen for Zoom backgrounds, OBS streaming, or pixel checking.">
+    <meta property="og:url" content="https://screentest.run/green-screen">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I use this for Zoom backgrounds?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. If you don't have a physical green cloth, you can display this page on a large TV or monitor behind you to help Zoom replace your background more accurately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I see a black dot?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That is likely a dead green sub-pixel. It means that specific part of the pixel cannot light up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the hexadecimal color code for green?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The hexadecimal color code for green is #00FF00. This tool displays that exact color value across the entire screen for consistent visual reference."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use this green screen on my mobile phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The full green screen is fully responsive and works across modern smartphones, tablets, and desktop computers. Tap the screen to enter full-screen mode."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the full green screen free to use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The full green screen is free to access and use, with no ads or hidden charges."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a green screen differ from a white screen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A white screen provides a neutral background commonly used for general testing or cleaning, while a green screen (#00FF00) displays a highly saturated green color suited for visual testing, vivid backgrounds, and basic green screen applications."
+      }
+    }
+  ]
+}
+</script>
+
+
+    <style>
+        /* === 核心变量 === */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --accent-color: #00ff9d; 
+            --font-stack: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === Header === */
+        header {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo a { text-decoration: none; color: #fff; }
+        .logo span { color: var(--accent-color); }
+
+        .top-nav { display: flex; gap: 15px; align-items: center; }
+        .nav-link { 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            transition: all 0.2s; 
+        }
+        .nav-link.home { color: #fff; border: 1px solid #333; }
+        .nav-link.home:hover { border-color: #666; background: #222; }
+        .nav-link.hz { color: var(--accent-color); border: 1px solid var(--accent-color); }
+        .nav-link.hz:hover { background: var(--accent-color); color: var(--bg-color); }
+
+        /* === Hero Section === */
+        .hero {
+            text-align: center;
+            padding: 60px 0 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        h1 {
+            font-size: clamp(2rem, 3vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+        
+        /* 针对绿色的高亮样式 */
+        h1 .green-highlight {
+            background: linear-gradient(120deg, #00FF00, #00AA00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto 10px;
+        }
+        .subtitle1 {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            max-width: 650px;
+            margin: 0 auto 20px;
+            margin-top: 10px;
+        }
+
+        /* 按钮样式：为了配合绿色页面，改为绿色主题，或者保持白色也可以，这里改为绿色更协调 */
+        .start-btn {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+            border: none;
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.4);
+            background: #ffffff;
+        }
+
+        /* === Content Section General === */
+        .content-section {
+            padding-top: 20px;
+            color: #ccc;
+            text-align: left;
+        }
+        .content-section h2 { margin-bottom: 30px; font-size: 1.5rem; color: #fff; }
+        .content-section h3 { font-size: 1.2rem; color: #fff; margin-bottom: 10px; }
+        .content-section p { margin-bottom: 15px; line-height: 1.8; color: #b0b0b0; font-size: 1.05rem;}
+        
+        /* === Use Case Grid === */
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .use-case-card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 16px;
+            transition: border-color 0.2s;
+        }
+        .use-case-card:hover { border-color: #666; }
+        .use-case-card strong { color: #fff; }
+
+        /* === Steps List === */
+        .steps-container {
+            background: #111;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 50px;
+        }
+        .steps-list { margin-left: 20px; color: #ccc; }
+        .steps-list li { margin-bottom: 15px; font-size: 1.05rem; }
+        .steps-list strong { color: #fff; }
+
+        /* === Info List === */
+        .info-list {
+            list-style: none;
+            margin-bottom: 40px;
+            padding: 0;
+        }
+        .info-list li {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 2px solid #00FF00; /* 绿色边框 */
+        }
+        .info-list strong { color: #fff; display: block; margin-bottom: 8px; font-size: 1.1rem; }
+
+        /* === Color Grid Section === */
+        .color-grid-section { 
+            text-align: center; 
+            padding: 60px 0; 
+            border-top: 1px solid #222; 
+        }
+        .color-grid-section h2 { font-size: 1.6rem; margin-bottom: 40px; color: #fff; }
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .color-card {
+            display: flex; flex-direction: column; align-items: center; text-decoration: none;
+            background: var(--card-bg); border: 1px solid #333; border-radius: 8px; padding: 15px;
+            transition: transform 0.2s;
+        }
+        .color-card:hover { transform: translateY(-5px); border-color:var(--accent-color); }
+        .color-preview { width: 100%; height: 40px; border-radius: 4px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        .color-card span { color: var(--text-main); font-family: var(--font-stack); font-size: 0.85rem; }
+        
+        /* 颜色定义保持一致 */
+        .color-card.white .color-preview { background-color: #FFFFFF; }
+        .color-card.black .color-preview { background-color: #000000; border: 1px solid #444; }
+        .color-card.red .color-preview { background-color: #FF0000; }
+        .color-card.green .color-preview { background-color: #00FF00; }
+        .color-card.blue .color-preview { background-color: #0000FF; }
+        .color-card.grey50 .color-preview { background-color: #808080; }
+        .color-card.grey25 .color-preview { background-color: #404040; }
+        .color-card.grey75 .color-preview { background-color: #BFBFBF; }
+        .color-card.yellow .color-preview { background-color: #FFFF00; }
+        .color-card.magenta .color-preview { background-color: #FF00FF; }
+        .color-card.cyan .color-preview { background-color: #00FFFF; }
+        .color-card.orange .color-preview { background-color: #FFA500; }
+
+        /* === FAQ === */
+        .faq-item { margin-bottom: 10px; padding-bottom: 20px; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item h3 { color: #eee; font-size: 1.15rem; margin-bottom: 10px; }
+
+        footer { margin-top: auto; padding: 50px 0; border-top: 1px solid #222; text-align: center; color: #555; font-size: 0.9rem; }
+
+        /* Fullscreen Layer - 关键修改：背景色为纯绿 */
+        #test-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #00FF00; 
+            z-index: 9999; display: none; cursor: none;
+        }
+        #test-hint {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: #000; font-family: var(--font-stack); font-weight: bold;
+            pointer-events: none; transition: opacity 1s; text-align: center; opacity: 0.4;
+        }
+
+        @media (max-width: 600px) { h1 { font-size: 2.5rem; } }
+
+        /* === 模拟显示器风格的启动器 === */
+        .monitor-launcher {
+            width: 480px;
+            height: 280px;
+            border: 2px solid #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .monitor-launcher:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 255, 0, 0.15); /* 绿色光晕 */
+        }
+        .launcher-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .play-icon { font-size: 2rem; margin-bottom: 5px; }
+        .launch-text { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .launch-sub { font-size: 0.8rem; font-family: var(--font-stack); }
+        .monitor-launcher:active { transform: scale(0.98); }
+
+        /* 汉堡按钮 */
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; margin-left: auto; }
+        .nav-toggle span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 999px; margin: 3px 0; transition: transform 0.2s, opacity 0.2s; }
+
+        @media (max-width: 720px) {
+            header { position: relative; }
+            .nav-toggle { display: inline-flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; }
+            .top-nav { position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--card-bg); border: 1px solid #333; border-radius: 12px; padding: 10px 12px; display: none; flex-direction: column; gap: 8px; min-width: 180px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+            header.nav-open .top-nav { display: flex; }
+            .nav-link { display: block; width: 100%; text-align: left; font-size: 0.9rem; padding: 8px 10px; }
+            header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+            header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+            header.nav-open .nav-toggle span:nth-child(3) { transform: translateX(0px) translateY(-6px) rotate(-45deg); }
+            .container { padding: 0 16px; }
+            .hero { padding: 40px 0 32px; }
+            h1 { font-size: 2rem; margin-bottom: 20px; }
+            .subtitle { font-size: 0.98rem; margin-bottom: 16px; max-width: 100%; }
+            .subtitle1 { font-size: 0.8rem; max-width: 100%; margin-bottom: 20px; }
+            .start-btn { width: 100%; max-width: 180px; padding: 14px 24px; font-size: 1.05rem; }
+            .monitor-launcher { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; height: auto; margin-top: 20px; margin-bottom: 20px; }
+            .launch-text { font-size: 1rem; }
+            .launch-sub { font-size: 0.75rem; }
+            .color-grid-section { padding: 40px 0; }
+            .color-grid { max-width: 100%; gap: 12px; }
+            .use-case-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+            .use-case-card { padding: 20px; }
+            .steps-container { padding: 20px 18px; margin-bottom: 30px; }
+            .steps-list li { font-size: 0.98rem; }
+            .info-list li { margin-bottom: 20px; padding-left: 16px; }
+            .info-list strong { font-size: 1.02rem; }
+            .faq-item h3 { font-size: 1.05rem; }
+            .faq-item p { font-size: 0.95rem; }
+            .content-section { margin-top: 28px; padding-top: 20px; }
+            footer { padding: 30px 0; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo"><a href="/">ScreenTest.run<span></span></a></div>
+
+            <!-- 汉堡按钮 -->
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="top-nav">
+                <a href="/" class="nav-link home">Dead Pixel Test</a>
+                <a href="/screen-refresh-rate-test" class="nav-link home">Refresh Rate Test</a>
+                <a href="/black-screen" class="nav-link home">Black Screen</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <h1>View a Vibrant Full <span class="green-highlight">Green Screen</span> for Enhanced Visual Impact.</h1>
+                <p class="subtitle">
+                    Your simple tool for a bright, blank green display.
+                </p>
+                <p class="subtitle1">
+                    Need a full green display? Tap below to enter full-screen mode for an uninterrupted experience.
+                </p>
+                <!-- 1. 快速入口 -->
+                <button id="btn-quick-start" class="start-btn">Start Instantly</button>
+
+                <!-- 2. 沉浸入口 -->
+                <!-- 背景色改为纯绿，文字改为黑色 -->
+                <div class="monitor-launcher" id="box-launch" role="button" tabindex="0" style="background-color: #00FF00; border-color: #00cc00;">
+                    <div class="launcher-content">
+                        <span class="play-icon" style="color: #000;">▶</span>
+                        <span class="launch-text" style="color: #000;">Launch Full Green Screen</span>
+                        <span class="launch-sub" style="color: #000;">Click to Start</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 颜色入口网格 -->
+            <section class="color-grid-section">
+                <h2>Specific Screen Defect Tests</h2>
+                <div class="color-grid">
+                    <a href="/white-screen" class="color-card white" title="White Screen Test">
+                        <div class="color-preview"></div><span>White</span>
+                    </a>
+                    <a href="/black-screen" class="color-card black" title="Black Screen Test">
+                        <div class="color-preview"></div><span>Black</span>
+                    </a>
+                    <a href="/red-screen" class="color-card red" title="Red Screen Test">
+                        <div class="color-preview"></div><span>Red</span>
+                    </a>
+                    <!-- <a href="/green-screen" class="color-card green" title="Green Screen Test">
+                        <div class="color-preview"></div><span>Green</span>
+                    </a> -->
+                    <a href="/blue-screen" class="color-card blue" title="Blue Screen Test">
+                        <div class="color-preview"></div><span>Blue</span>
+                    </a>
+                    <!-- <a href="/grey-50-screen" class="color-card grey50" title="50% Grey Screen Test">
+                        <div class="color-preview"></div><span>50% Grey</span>
+                    </a>
+                    <a href="/grey-25-screen" class="color-card grey25" title="25% Grey Screen Test">
+                        <div class="color-preview"></div><span>25% Grey</span>
+                    </a>
+                    <a href="/grey-75-screen" class="color-card grey75" title="75% Grey Screen Test">
+                        <div class="color-preview"></div><span>75% Grey</span>
+                    </a>
+                    <a href="/yellow-screen" class="color-card yellow" title="Yellow Screen Test">
+                        <div class="color-preview"></div><span>Yellow</span>
+                    </a>
+                    <a href="/magenta-screen" class="color-card magenta" title="Magenta Screen Test">
+                        <div class="color-preview"></div><span>Magenta</span>
+                    </a>
+                    <a href="/cyan-screen" class="color-card cyan" title="Cyan Screen Test">
+                        <div class="color-preview"></div><span>Cyan</span>
+                    </a>
+                    
+                    <a href="/orange-screen" class="color-card orange" title="Current Page">
+                        <div class="color-preview"></div><span>Orange</span>
+                    </a> -->
+                </div>
+            </section>
+
+            <!-- 1. Use Cases (针对绿色重写) -->
+            <section class="content-section">
+                <h2>Why Use a Green Screen?</h2>
+                <div class="use-case-grid">
+
+                    <div class="use-case-card">
+                        <h3>Vibrant Background:</h3>
+                        <p>Provides a bright, uniform green backdrop suitable for a range of practical uses.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Visual Testing:</h3>
+                        <p>Useful for evaluating screen uniformity, color consistency, and identifying specific display issues.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Basic Green Screen Effect:</h3>
+                        <p>Can be used as a simple background for basic chroma keying and visual effects testing.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Bright Ambient Light:</h3>
+                        <p>Provides a clear, distinct green light source suitable for ambient lighting or practical utility.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Design and Art Reference:</h3>
+                        <p>Serves as a consistent color background for digital artwork and color palette evaluation.</p>
+                    </div>
+                    <div class="use-case-card">
+                        <h3>Focus Tool:</h3>
+                        <p>A bright, blank green background helps reduce visual distractions and support sustained concentration.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="content-section">
+                <h2>Benefits of ScreenTest.run’s Green Screen</h2>
+                <div class="steps-container">
+                    <ul class="steps-list">
+                        <li><strong>Instant Access:</strong> Runs directly in your browser with no downloads or installations required.</li>
+                        <li><strong>True Full-Screen Mode:</strong> Uses the entire display area (behavior may vary by system and browser).</li>
+                        <li><strong>Cross-Device Support:</strong> Designed with a responsive layout to work smoothly on desktops, tablets, and mobile devices.</li>
+                        <li><strong>User-Friendly Interface:</strong> Clean and intuitive design that requires no setup or learning curve.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 2. How to -->
+            <section class="content-section">
+                <h2>How to Get a Full Green Screen?</h2>
+                <div class="steps-container">
+                    <ol class="steps-list">
+                        <li><strong>Click the Button:</strong> Hit "Launch Full Green Screen" above.</li>
+                        <li><strong>Go Fullscreen:</strong> Your browser will cover the entire display.</li>
+                        <li><strong>Inspect or Record:</strong> Use it for pixel testing or as a video background.</li>
+                        <li><strong>Exit:</strong> Click anywhere or press <strong>ESC</strong> to return.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- 3. Technical Specs -->
+            <section class="content-section">
+                <h2>Technical Details: The Color Green</h2>
+                <ul class="info-list">
+                    <li>
+                        <strong>Hex Code: #00FF00</strong>
+                        This is the standard digital green, maximizing the green channel (255) while keeping red and blue at 0.
+                    </li>
+                    <li>
+                        <strong>Why Green for VFX?</strong>
+                        Digital camera sensors are most sensitive to green, capturing more detail and less noise in this channel. That's why green screens are the industry standard for keying.
+                    </li>
+                    <li>
+                        <strong>A full green screen provides a clear, highly visible display.</strong>
+                        Its pure green color (#00FF00) represents one of the brightest values in the RGB color space, making it suitable for display testing, color reference, and basic green screen use. Whether used for technical checks, visual work, or a clean full-screen color background, this tool delivers fast, browser-based access across devices.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 4. FAQs -->
+            <section class="content-section">
+                <h2>Green Screen FAQs</h2>
+                <div class="faq-item">
+                    <h3>Can I use this for Zoom backgrounds?</h3>
+                    <p>Yes. If you don't have a physical green cloth, you can display this page on a large TV or monitor behind you to help Zoom replace your background more accurately.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What if I see a black dot?</h3>
+                    <p>That is likely a <strong>dead green sub-pixel</strong>. It means that specific part of the pixel cannot light up.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What is the hexadecimal color code for  green?</h3>
+                    <p>The hexadecimal color code for  green is #00FF00. This tool displays that exact color value across the entire screen for consistent visual reference.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I use this  screen on my mobile phone?</h3>
+                    <p>Yes. The full  green screen is fully responsive and works across modern smartphones, tablets, and desktop computers. Tap the screen to enter full-screen mode.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is the full  green screen free to use?</h3>
+                    <p>Yes. The full  green screen is free to access and use, with no ads or hidden charges.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How does a  green screen differ from a white screen?</h3>
+                    <p>A white screen provides a neutral background commonly used for general testing or cleaning, while a  green screen (#00FF00) displays a highly saturated green color suited for visual testing, vivid backgrounds, and basic green screen applications.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            &copy; 2025 ScreenTest.run. Simple tools for display perfection.
+        </footer>
+    </div>
+
+    <!-- Fullscreen Logic (背景色改为绿色) -->
+    <div id="test-layer">
+        <div id="test-hint">
+            Click or Press ESC to Exit
+        </div>
+    </div>
+
+    <script>
+        const btnQuick = document.getElementById('btn-quick-start');
+        const btnBox = document.getElementById('box-launch');
+        const testLayer = document.getElementById('test-layer');
+        const hint = document.getElementById('test-hint');
+
+        // 通用：显示测试层并隐藏提示
+        function showLayer() {
+            document.body.style.overflow = 'hidden'; 
+            testLayer.style.display = 'block';
+            setTimeout(() => { hint.style.opacity = '0'; }, 3000);
+        }
+
+        // 1. 快速入口
+        btnQuick.addEventListener('click', () => {
+            showLayer();
+        });
+
+        // 2. 沉浸入口
+        btnBox.addEventListener('click', () => {
+            showLayer();
+            enterSystemFullscreen();
+        });
+
+        // 退出逻辑
+        function exitTest() {
+            testLayer.style.display = 'none';
+            hint.style.opacity = '0.4'; 
+            document.body.style.overflow = ''; 
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(err => {});
+            }
+        }
+
+        testLayer.addEventListener('click', exitTest);
+        document.addEventListener('keydown', (e) => {
+            if (testLayer.style.display === 'block' && (e.code === 'Escape' || e.code === 'Space')) {
+                exitTest();
+            }
+        });
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) exitTest();
+        });
+
+        function enterSystemFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen();
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+            else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+        }
+
+        // --- 移动端汉堡菜单 ---
+        const navToggle = document.querySelector('.nav-toggle');
+        const headerEl = document.querySelector('header');
+        const navLinks = document.querySelectorAll('.top-nav a');
+
+        if (navToggle && headerEl) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = headerEl.classList.toggle('nav-open');
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    headerEl.classList.remove('nav-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9W9M2SD96Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9W9M2SD96Q');
+    </script>
+</body>
+</html>
